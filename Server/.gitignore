@@ -2,3 +2,5 @@ apache-log4j-*
 httpcomponents-client-*
 *.class
 *.jar
+GolgiUsers.txt
+HiScore.txt
