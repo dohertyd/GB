@@ -1,0 +1,4 @@
+apache-log4j-*
+httpcomponents-client-*
+*.class
+*.jar
