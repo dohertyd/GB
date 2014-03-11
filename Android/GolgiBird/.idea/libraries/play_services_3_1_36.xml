@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="play-services-3.1.36">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/GolgiBird/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res" />
+      <root url="jar://$PROJECT_DIR$/GolgiBird/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

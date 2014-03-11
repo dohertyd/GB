@@ -1,0 +1,9 @@
+//
+//  Config.xcconfig
+//  Golgi Bird
+//
+//  Created by Brian Kelly on 19/02/2014.
+//  Copyright (c) 2014 Openmind Networks. All rights reserved.
+//
+
+OTHER_LDFLAGS = -L${PROJECT_DIR}/${PROJECT_NAME} -ObjC -lsqlite3.0 -lGolgi

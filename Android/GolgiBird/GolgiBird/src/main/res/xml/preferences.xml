@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="BCAST"
+        android:defaultValue="true"
+        android:title="Broadcast Games"
+        android:summary="Allow others to watch you play"
+        ></CheckBoxPreference>
+    <EditTextPreference
+        android:key="NAME"
+        android:defaultValue="Anonymous"
+        android:summary="The name shown to others watching you play"
+        android:title="Screen Name"
+            ></EditTextPreference>
+</PreferenceScreen>
