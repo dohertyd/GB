@@ -33,7 +33,7 @@ repositories {
   the signingConfig line android/buildTypes/Release
 
  */
-apply from: '../../../GolgiBird.Signage.gradle'
+// apply from: '../../../GolgiBird.Signage.gradle'
 
 android {
 
@@ -51,7 +51,7 @@ android {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             debuggable false
-            signingConfig signingConfigs.playStoreConfig
+            // signingConfig signingConfigs.playStoreConfig
         }
     }
 }
@@ -98,6 +98,7 @@ task(cClean, type: JavaExec) {
     args '-clean', '-i', '../../../TapTelegraph.thrift', '-jo', GEN_DIR
 }
 
+cClean.dependsOn mkGenDir
 clean.dependsOn cClean
 preBuild.dependsOn cBuild
 cBuild.dependsOn mkKeyFiles
