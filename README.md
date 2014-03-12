@@ -26,7 +26,9 @@ In the Server directory:
 ### Build the Android Application
 
 In Android Studio, open the Project in the 
-```Android/Golgibird``` directory. Modify ```build.gradle``` so that it pointsBuild the Application and install it on one
+```Android/Golgibird``` directory. Modify ```build.gradle``` so that it points to wherever your latest Golgi SDK is installed. 
+
+Build the Application and install it on one
 or more Android devices.
 
 ### Build the iOS Application
