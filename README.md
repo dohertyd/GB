@@ -33,6 +33,6 @@ or more Android devices.
 
 ### Build the iOS Application
 
-In Xcode, open ```iOS/GolgiBird/Golgi Bird/Golgi Bird.xcodeproj``` then build and install
+In Xcode, open ```iOS/GolgiBird/GolgiBird.xcodeproj``` then build and install
 the application on one or more iOS devices.
 
