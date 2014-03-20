@@ -283,7 +283,7 @@ public class PlayfieldActivity extends ActionBarActivity
 
         GolgiAPI.usePersistentConnection();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        broadcastGames = settings.getBoolean("BCAST", false);
+        broadcastGames = settings.getBoolean("BCAST", true);
         screenName = settings.getString("NAME", "Anonymous");
         DBG("Name: " + screenName);
         DBG("Broadcast set to: " + broadcastGames);

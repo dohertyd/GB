@@ -1,7 +1,7 @@
 apply plugin: 'android'
 
-def AAR_ROOT = "$System.env.HOME" + '/Golgi-Apple-Pkg/v2-02-00/Android'
-def JAR_DIR = "$System.env.HOME" + '/Golgi-Apple-Pkg/v2-02-00/common'
+def AAR_ROOT = "$System.env.HOME" + '/Golgi-Apple-Pkg/v2-02-02/Android'
+def JAR_DIR = "$System.env.HOME" + '/Golgi-Apple-Pkg/v2-02-02/common'
 def GEN_DIR = 'src/main/java/io/golgi/example/gen'
 // AAR_ROOT = "$System.env.HOME" + '/Dropbox/GOLGI-ANDROID-LOCAL-BUILD/'
 repositories {
@@ -60,7 +60,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.android.gms:play-services:3.1.36'
     compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    compile ':golgi-support:2.2.0@aar'
+    compile ':golgi-support:2.2.2@aar'
 //    compile ':golgi-support:9.99.99@aar'
 }
 
