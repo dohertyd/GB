@@ -28,6 +28,9 @@
 @property IBOutlet UIButton *watchButton;
 @property IBOutlet UILabel *nameLabel;
 @property IBOutlet UILabel *netHiScoreLabel;
+@property IBOutlet UIView *forkMeTouchView;
+@property IBOutlet UIImageView *forkMeImageView;
+
 
 - (IBAction)touchDown:(id)sender;
 - (IBAction)playPressed:(id)sender;

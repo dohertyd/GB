@@ -27,17 +27,22 @@
 
 package io.golgi.example;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openmindnetworks.golgi.api.GolgiException;
 import com.openmindnetworks.golgi.api.GolgiTransportOptions;
@@ -110,6 +115,7 @@ public class Controller implements View.OnTouchListener{
     TextView gameOverTv;
     TextView tapToStartTv;
     TextView netHiScoreTv;
+    ImageView forkMeIv;
     Button playButton;
     Button watchButton;
 
@@ -292,7 +298,7 @@ public class Controller implements View.OnTouchListener{
 
         screenXglobal = 0;
         screenX = 0;
-        playerX = 0;
+        playerX = -playerBitmap.getWidth();
         playerY = 0;
 
         showTextViews();
@@ -548,8 +554,10 @@ public class Controller implements View.OnTouchListener{
             playButton.setVisibility(View.VISIBLE);
             watchButton.setVisibility(View.VISIBLE);
             netHiScoreTv.setVisibility(View.VISIBLE);
+            forkMeIv.setVisibility(View.VISIBLE);
         }
         else{
+            forkMeIv.setVisibility(View.INVISIBLE);
             playButton.setVisibility(View.INVISIBLE);
             watchButton.setVisibility(View.INVISIBLE);
             hiScoreTv.setVisibility(View.VISIBLE);
@@ -595,8 +603,36 @@ public class Controller implements View.OnTouchListener{
         gameOverTv = (TextView)activity.findViewById(R.id.gameOverTextView);
         tapToStartTv = (TextView)activity.findViewById(R.id.startTextView);
         netHiScoreTv = (TextView)activity.findViewById(R.id.netHiScoreTextView);
+        forkMeIv = (ImageView)activity.findViewById(R.id.forkMeImageView);
 
         netHiScoreTv.setText("");
+
+        forkMeIv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int w = v.getWidth();
+                int h = v.getHeight();
+                int x = (int)event.getX();
+                int y = (int)event.getY();
+
+                DBG("(" + v.getWidth() + "," + v.getHeight() + ") " + event.getX() + "," + event.getY());
+
+                if(x < (w - y)){
+                    DBG("YES");
+                    try {
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/GolgiDevs/GolgiBird"));
+                        activity.startActivity(myIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(activity, "Cannot launch web browser", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else{
+                    DBG("NO");
+                }
+
+                return false;
+            }
+        });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -310,7 +310,7 @@
         playerYglobal = (SCREEN_HEIGHT_REF - PLAYER_HEIGHT_REF)/2;
     }
     else{
-        playerXglobal = 0;
+        playerXglobal = -PLAYER_WIDTH_REF;
         playerYglobal = 0;
     }
     playerX = (playerXglobal * xScale);
@@ -534,10 +534,12 @@
     BOOL watchHidden = TRUE;
     BOOL nameHidden = TRUE;
     BOOL netHiScoreHidden = TRUE;
+    BOOL forkMeHidden = TRUE;
     
     
     switch(gameState){
         case PLAY_OR_WATCH:
+            forkMeHidden = FALSE;
             playHidden = FALSE;
             watchHidden = FALSE;
             netHiScoreHidden = FALSE;
@@ -583,6 +585,8 @@
     viewController.watchButton.hidden = watchHidden;
     viewController.nameLabel.hidden = nameHidden;
     viewController.netHiScoreLabel.hidden = netHiScoreHidden;
+    viewController.forkMeImageView.hidden = forkMeHidden;
+    viewController.forkMeTouchView.hidden = forkMeHidden;
 }
 
 
@@ -610,6 +614,21 @@
     [self showStateStuff];
     [self sendStreamGame];
 }
+- (void)handleGesture:(UIGestureRecognizer *) recognizer {
+    
+    CGPoint touchPoint = [recognizer locationOfTouch:0 inView:viewController.forkMeTouchView];
+    bool processTouch = CGPathContainsPoint(forkPath, NULL, touchPoint, true);
+    
+    if(processTouch) {
+        // call your method to process the touch
+        NSLog(@"FORK: YES");
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/GolgiDevs/GolgiBird"]];
+    }
+    else{
+        NSLog(@"FORK: NO");
+    }
+}
+
 
 - (Controller *)initWithViewController:(ViewController *)_viewController
 {
@@ -633,14 +652,25 @@
     yScale = playfield.frame.size.height / SCREEN_HEIGHT_REF;
     gameState = PLAY_OR_WATCH;
     [self showStateStuff];
-    playerXglobal = 0;
+    playerXglobal = -PLAYER_WIDTH_REF;
     playerYglobal = 0;
-    playerX = 0;
-    playerY = 0;
+    playerX = (playerXglobal * xScale);
+    playerY = (playerYglobal * yScale);
     score = 0;
     hiScore = [GameData getHiScore];
     personalBest = hiScore;
     tapIndex = 1;
+    
+    forkPath = CGPathCreateMutable();
+    CGPathMoveToPoint(forkPath, NULL, 0.0, 0.0);
+    CGPathAddLineToPoint(forkPath, NULL, viewController.forkMeTouchView.frame.size.width, 0.0);
+    CGPathAddLineToPoint(forkPath, NULL, 0.0, viewController.forkMeTouchView.frame.size.height);
+    CGPathCloseSubpath(forkPath);
+
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleGesture:)];
+    // [tapRecognizer setNumberOfTapsRequired:2]; // default is 1
+    
+    [viewController.forkMeTouchView addGestureRecognizer:tapRecognizer];
 
     renderer = [[Renderer alloc] initWithController:self];
     

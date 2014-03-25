@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		967037C918E1A7E900F0738C /* fork_me.png in Resources */ = {isa = PBXBuildFile; fileRef = 967037C818E1A7E900F0738C /* fork_me.png */; };
 		9683962818B24C6E00F5E1F4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9683962718B24C6E00F5E1F4 /* Foundation.framework */; };
 		9683962A18B24C6E00F5E1F4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9683962918B24C6E00F5E1F4 /* CoreGraphics.framework */; };
 		9683962C18B24C6E00F5E1F4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9683962B18B24C6E00F5E1F4 /* UIKit.framework */; };
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		967037C818E1A7E900F0738C /* fork_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fork_me.png; sourceTree = "<group>"; };
 		9683962418B24C6E00F5E1F4 /* GolgiBird.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolgiBird.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9683962718B24C6E00F5E1F4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9683962918B24C6E00F5E1F4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -230,6 +232,7 @@
 		9683966518B252A500F5E1F4 /* Imagery */ = {
 			isa = PBXGroup;
 			children = (
+				967037C818E1A7E900F0738C /* fork_me.png */,
 				96C1B8B218B508F400172130 /* grey-swatch.png */,
 				9683966618B252CB00F5E1F4 /* player.png */,
 				9683966718B252CB00F5E1F4 /* pipe.png */,
@@ -330,6 +333,7 @@
 				9683963E18B24C6F00F5E1F4 /* Main_iPad.storyboard in Resources */,
 				96C1B8B518B5153700172130 /* Settings.bundle in Resources */,
 				96C1B8B318B508F400172130 /* grey-swatch.png in Resources */,
+				967037C918E1A7E900F0738C /* fork_me.png in Resources */,
 				9683964318B24C6F00F5E1F4 /* Images.xcassets in Resources */,
 				9683963B18B24C6E00F5E1F4 /* Main_iPhone.storyboard in Resources */,
 				9683966018B24C9600F5E1F4 /* golgi_gen.sh in Resources */,

@@ -17,6 +17,8 @@
 @synthesize controller;
 @synthesize playfield;
 @synthesize bgImageView;
+@synthesize forkMeTouchView;
+@synthesize forkMeImageView;
 
 - (IBAction)touchDown:(id)sender
 {

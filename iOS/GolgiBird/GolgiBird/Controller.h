@@ -56,6 +56,7 @@ typedef enum{
     GameOverData *gameOverData;
     GolgiTransportOptions *stdGto;
     GameStateEnum gameState;
+    struct CGPath *forkPath;
 }
 
 
