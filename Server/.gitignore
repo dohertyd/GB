@@ -4,3 +4,4 @@ httpcomponents-client-*
 *.jar
 GolgiUsers.txt
 HiScore.txt
+io/golgi/example/gen
