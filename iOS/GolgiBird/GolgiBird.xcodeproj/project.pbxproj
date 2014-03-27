@@ -536,7 +536,8 @@
 				GCC_PREFIX_HEADER = "GolgiBird/GolgiBird-Prefix.pch";
 				INFOPLIST_FILE = "GolgiBird/GolgiBird-Info.plist";
 				PRODUCT_NAME = GolgiBird;
-				PROVISIONING_PROFILE = "86E311EF-611D-44F1-9D3C-8347CE60D4CB";
+				PROVISIONING_PROFILE = "14827CD2-6C30-4D66-9084-CBF00A21EF32";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -553,6 +554,7 @@
 				INFOPLIST_FILE = "GolgiBird/GolgiBird-Info.plist";
 				PRODUCT_NAME = GolgiBird;
 				PROVISIONING_PROFILE = "720FEEC7-4723-41B6-BDFC-F4DA42B223DF";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

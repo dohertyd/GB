@@ -14,8 +14,12 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
     NSLog(@"My token is: %@", deviceToken);
-    
+#ifdef DEBUG
     [Golgi setDevPushToken:deviceToken];
+#else
+    [Golgi setProdPushToken:deviceToken];
+#endif
+    
     
 }
 
