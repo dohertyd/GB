@@ -112,7 +112,7 @@ static int *cSamples = NULL;
                         dead = false;
                         int hxl = h.x - ctrlr.screenXglobal;
                         int hxr = hxl + PIPE_WIDTH_REF;
-                        int hyb = h.gapY;
+                        int hyb = (int)h.gapY;
                         int hyt = hyb - PIPE_GAP_HEIGHT;
                         
                         for(int i = 0; !dead && cSamples[i] >= 0; i+= 2){

@@ -78,7 +78,7 @@ static GameData *instance = nil;
     NSDictionary *plistDict = [NSDictionary dictionaryWithObjects:
                                [NSArray arrayWithObjects:
                                 [NSString stringWithString:instanceId],
-                                [NSNumber numberWithInt:hiScore],
+                                [NSNumber numberWithInteger:hiScore],
                                 nil]
                                
                                 forKeys:[NSArray arrayWithObjects:
@@ -124,7 +124,7 @@ static GameData *instance = nil;
                                           format:&format
                                           errorDescription:&errorDesc];
     if (!temp) {
-        NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
+        NSLog(@"Error reading plist: %@, format: %d", errorDesc, (int)format);
     }
     else {
         if((num = [temp objectForKey:@"hiScore"]) != nil){
@@ -135,7 +135,7 @@ static GameData *instance = nil;
         }
     }
     
-    NSLog(@"   HI SCORE: %d", hiScore);
+    NSLog(@"   HI SCORE: %ld", (long)hiScore);
     NSLog(@"Instance Id: '%@'", instanceId);
     
     return self;

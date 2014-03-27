@@ -42,7 +42,7 @@ static long long mask = 0;
     [Random setSeed:(long long)time(NULL)];
     NSMutableString *str = [[NSMutableString alloc] init];
     for(int i = 0; i < length; i++){
-        [str appendFormat:@"%c", 'A' + [Random nextWithMax:('z' - 'A')]];
+        [str appendFormat:@"%c", (char)('A' + [Random nextWithMax:('z' - 'A')])];
     }
     return [NSString stringWithString:str];
 }
