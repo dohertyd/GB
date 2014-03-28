@@ -28,7 +28,7 @@
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
 
-PKG_DIR		=	$(HOME)/Golgi-Apple-Pkg/v2-02-00
+PKG_DIR		=	$(HOME)/Golgi-Apple-Pkg/v2-02-06
 JDK_BIN		=	/usr/bin
 JRE_BIN		=	/usr/bin
 

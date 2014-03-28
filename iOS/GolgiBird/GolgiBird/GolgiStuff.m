@@ -10,6 +10,8 @@
 #import "TapTelegraphSvcWrapper.h"
 #import "GameData.h"
 #import "Random.h"
+#import "GOLGIBIRD_KEYS.h"
+
 
 @implementation GolgiStuff
 
@@ -33,8 +35,8 @@
     NSLog(@"Registering with golgiId: '%@'", ourId);
     // [Golgi setOption:@"USE_DEV_CLUSTER" withValue:@"0"];
     
-    [Golgi registerWithDevId:@"2T3R2OYDQPW43WNWAQV7KA2D6WFEK7CU" //--DEVELOPER-KEY-HERE--
-                       appId:@"R5E7VCT4E5YIBIGEDX4CE624VODF342Z" //--APPLICATION-KEY-HERE--
+    [Golgi registerWithDevId:GOLGIBIRD_DEV_KEY
+                       appId:GOLGIBIRD_APP_KEY
                       instId:ourId
                   andAPIUser:self];
 }
