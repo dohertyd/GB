@@ -75,6 +75,8 @@ public class Server extends Thread implements GolgiAPIHandler{
     private String hiScoreHolder = "nobody";
     private int hiScoreValue = -1;
     private GolgiTransportOptions stdGto;
+    private GolgiTransportOptions hourGto;
+    private GolgiTransportOptions dayGto;
     
     newHiScore.ResultReceiver newHiScoreResultReceiver = new newHiScore.ResultReceiver() {
         @Override
@@ -135,7 +137,7 @@ public class Server extends Thread implements GolgiAPIHandler{
                     System.out.println("Send to '" + user + "'");
                     newHiScore.sendTo(
                             newHiScoreResultReceiver,
-                            stdGto,
+                            dayGto,
                             user,
                             hiScoreData);
                 }
@@ -474,7 +476,7 @@ public class Server extends Thread implements GolgiAPIHandler{
                 System.out.println("Send to '" + user + "'");
                 newPB.sendTo(
                              newPBResultReceiver,
-                             stdGto,
+                             hourGto,
                              user,
                              hiScoreData);
             }
@@ -500,6 +502,13 @@ public class Server extends Thread implements GolgiAPIHandler{
         GolgiAPI.setAPIImpl(impl);
         stdGto = new GolgiTransportOptions();
         stdGto.setValidityPeriod(60);
+
+        hourGto = new GolgiTransportOptions();
+        hourGto.setValidityPeriod(3600);
+
+        dayGto = new GolgiTransportOptions();
+        dayGto.setValidityPeriod(86400);
+
         loadHiScore();
         loadUsers();
         
