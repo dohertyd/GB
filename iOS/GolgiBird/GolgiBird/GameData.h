@@ -10,9 +10,13 @@
 
 @interface GameData : NSObject
 {
+    BOOL warningShown;
     NSInteger hiScore;
     NSString *instanceId;
 }
+
++ (BOOL)getWarningShown;
++ (void)setWarningShown:(BOOL)value;
 
 + (NSInteger)getHiScore;
 + (void)setHiScore:(NSInteger)hiScore;

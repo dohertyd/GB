@@ -32,6 +32,16 @@ static GameData *instance = nil;
     [[GameData getInstance] _setHiScore:_hiScore];
 }
 
++ (BOOL)getWarningShown
+{
+    return [[GameData getInstance] _getWarningShown];
+}
+
++ (void)setWarningShown:(BOOL)_warningShown
+{
+    [[GameData getInstance] _setWarningShown:_warningShown];
+}
+
 + (NSString *)getInstanceId
 {
     return [[GameData getInstance] _getInstanceId];
@@ -69,6 +79,17 @@ static GameData *instance = nil;
     
 }
 
+- (BOOL)_getWarningShown
+{
+    return warningShown;
+}
+
+- (void)_setWarningShown:(BOOL)_warningShown
+{
+    warningShown = _warningShown;
+    [self save];
+}
+
 - (void)save
 {
     NSString *error = nil;
@@ -79,11 +100,13 @@ static GameData *instance = nil;
                                [NSArray arrayWithObjects:
                                 [NSString stringWithString:instanceId],
                                 [NSNumber numberWithInteger:hiScore],
+                                [NSNumber numberWithBool:warningShown],
                                 nil]
                                
                                 forKeys:[NSArray arrayWithObjects:
                                          @"instanceId",
                                          @"hiScore",
+                                         @"warningShown",
                                          nil]
                                ];
     
@@ -102,6 +125,7 @@ static GameData *instance = nil;
 {
     self = [super init];
     
+    warningShown = FALSE;
     hiScore = 0;
     instanceId = @"";
     
@@ -133,10 +157,19 @@ static GameData *instance = nil;
         if((str = [temp objectForKey:@"instanceId"]) != nil){
             instanceId = str;
         }
+        if((num = [temp objectForKey:@"warningShown"]) != nil){
+            if([num integerValue] != 0){
+                warningShown = TRUE;
+            }
+            else{
+                warningShown = FALSE;
+            }
+        }
     }
     
-    NSLog(@"   HI SCORE: %ld", (long)hiScore);
-    NSLog(@"Instance Id: '%@'", instanceId);
+    NSLog(@"     HI SCORE: %ld", (long)hiScore);
+    NSLog(@"  Instance Id: '%@'", instanceId);
+    NSLog(@"Warning Shown: %d", warningShown);
     
     return self;
 }

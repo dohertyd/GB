@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "TapTelegraphSvcWrapper.h"
+#import "GameData.h"
 
 @implementation AppDelegate
 
@@ -44,6 +45,13 @@
     [self application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:nil];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView == dataSharingAlert){
+        [GameData setWarningShown:TRUE];
+        dataSharingAlert = nil;
+    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -51,6 +59,16 @@
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    
+    if(![GameData getWarningShown]){
+        dataSharingAlert = [[UIAlertView alloc] initWithTitle:@"GolgiBird Data Sharing"
+                                                      message:@"GolgiBird sends your Screen Name (default is 'Anonymous'), High-Score and Gameplay to our servers for sharing with other players.\n\nThis can be disabled in the\nGolgiBird Settings"
+                                                     delegate:self
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+        
+        [dataSharingAlert show];
+    }
 
     return YES;
 }

@@ -21,6 +21,8 @@
 + (char *)strDup:(const char *)c;
 + (char *)substrDup:(const char *)bos endOfString:(const char *)eos;
 + (int) strToInt:(const char *)str;
++ (double) strToDouble:(const char *)str;
++ (NSString *)doubleToStr:(double)value;
 + (NSString *)NTLEscapeString:(NSString *)str;
 + (NSString *)NTLDeEscapeString:(NSString *)str;
 + (NSArray *)breakupLlistPayload:(NSString *)payload;
@@ -98,6 +100,7 @@
 - (NSString *)getStringWithTag:(NSString *)tag;
 - (NSString *)getB64DataWithTag:(NSString *)tag;
 - (NSNumber *)getIntWithTag:(NSString *)tag;
+- (NSNumber *)getDoubleWithTag:(NSString *)tag;
 + (GolgiPayload *)payloadWithString:(NSString *)string;
 @end
 //
