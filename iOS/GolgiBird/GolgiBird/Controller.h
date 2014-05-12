@@ -44,6 +44,7 @@ typedef enum{
 @class ViewController;
 @interface Controller : NSObject
 {
+    BOOL dataEnabled;
     NSInteger gameSeed;
     Renderer *renderer;
     double lastTime;

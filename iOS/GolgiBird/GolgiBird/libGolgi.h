@@ -175,6 +175,9 @@
 //  Copyright (c) 2013 Openmind Networks. All rights reserved.
 //
 
+#if !defined(GOLGI_DOT_H_INCLUDED)
+#define GOLGI_DOT_H_INCLUDED
+
 
 
 @class GolgiException;
@@ -198,6 +201,12 @@
 - (void)golgiRegistrationSuccess;
 - (void)golgiRegistrationFailure:(NSString *)errorText;
 @end
+
+@protocol GolgiCryptoImpl
+- (NSString *)encryptGolgiPayload:(NSString *)payload forDst:(NSString *)dst withErrPtr:(NSString **)errPtr andIsSoftPtr:(BOOL *)isSoftPtr;
+- (NSString *)decryptGolgiPayload:(NSString *)payload fromSrc:(NSString *)src withErrPtr:(NSString **)errPtr;
+@end
+
 
 @protocol GolgiAPIBaseImpl <GolgiAPIUser>
 - (void)incomingMsg:(GolgiAPIMessage *)msg;
@@ -229,11 +238,14 @@
     BOOL persistentConn;
     id<GolgiAPIUser> apiUser;
     id<GolgiAPIImpl> apiImpl;
+    id<GolgiCryptoImpl> cryptoImpl;
 }
 
 + (void)setOption:(NSString *)name withValue:(NSString *)value;
 
 + (id<GolgiAPIBaseImpl>)setAPIImpl:(id<GolgiAPIImpl>)apiImpl;
+
++ (void)setCryptoImpl:(id<GolgiCryptoImpl>)cryptoImpl;
 
 + (void)useEphemeralConnection;
 
@@ -318,6 +330,8 @@
 
 - (id<GolgiAPIBaseImpl>)_setAPIImpl:(id<GolgiAPIImpl>)_apiImpl;
 
+- (void)_setCryptoImpl:(id<GolgiCryptoImpl>)_cryptoImpl;
+
 #endif
 
 @end
@@ -345,4 +359,6 @@
 
 
 @end
+
+#endif
 #endif

@@ -15,6 +15,7 @@
     NSString *instanceId;
 }
 
+
 + (BOOL)getWarningShown;
 + (void)setWarningShown:(BOOL)value;
 

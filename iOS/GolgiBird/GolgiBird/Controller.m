@@ -236,6 +236,11 @@
     return (name == nil) ? @"Anonymous" : name;
 }
 
+- (BOOL)getDataEnabled
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"broadcastGames"];
+}
+
 - (void)refreshTimer:(id)userInfo
 {
     double dT;
@@ -418,10 +423,12 @@
     
     NSLog(@"Player Name: %@", [self getPlayerName]);
     
-    [TapTelegraphSvc sendStartGameUsingResultReceiver:[[_StartGameResultReceiver alloc] init]
-                                 withTransportOptions:stdGto
-                                       andDestination:@"SERVER"
-                                       withPlayerInfo:playerInfo];
+    if(dataEnabled){
+        [TapTelegraphSvc sendStartGameUsingResultReceiver:[[_StartGameResultReceiver alloc] init]
+                                     withTransportOptions:stdGto
+                                           andDestination:@"SERVER"
+                                           withPlayerInfo:playerInfo];
+    }
 }
 
 - (void)sendTap
@@ -435,11 +442,12 @@
     [tapData setIndex:tapIndex++];
     [tapData setScore:score];
     
-    [TapTelegraphSvc sendSendTapUsingResultReceiver:[[_SendTapResultReceiver alloc] init]
-                               withTransportOptions:stdGto
-                                     andDestination:@"SERVER"
-                                        withTapData:tapData];
-    
+    if(dataEnabled){
+        [TapTelegraphSvc sendSendTapUsingResultReceiver:[[_SendTapResultReceiver alloc] init]
+                                   withTransportOptions:stdGto
+                                         andDestination:@"SERVER"
+                                            withTapData:tapData];
+    }
 
 }
 
@@ -452,10 +460,12 @@
     [god setPlayerY:playerYglobal];
     [god setScore:score];
     
-    [TapTelegraphSvc sendGameOverUsingResultReceiver:[[_GameOverResultReceiver alloc] init]
-                                withTransportOptions:stdGto
-                                      andDestination:@"SERVER"
-                                    withGameOverData:god];
+    if(dataEnabled){
+        [TapTelegraphSvc sendGameOverUsingResultReceiver:[[_GameOverResultReceiver alloc] init]
+                                    withTransportOptions:stdGto
+                                          andDestination:@"SERVER"
+                                        withGameOverData:god];
+    }
     
     
 }
@@ -467,10 +477,12 @@
     [hsd setName:[self getPlayerName]];
     [hsd setScore:personalBest];
     
-    [TapTelegraphSvc sendNewPBUsingResultReceiver:[[_NewPBResultReceiver alloc] init]
-                             withTransportOptions:stdGto
-                                   andDestination:@"SERVER"
-                                  withHiScoreData:hsd];
+    if(dataEnabled){
+        [TapTelegraphSvc sendNewPBUsingResultReceiver:[[_NewPBResultReceiver alloc] init]
+                                 withTransportOptions:stdGto
+                                       andDestination:@"SERVER"
+                                      withHiScoreData:hsd];
+    }
     
     
 }
@@ -479,10 +491,9 @@
 {
     
     [TapTelegraphSvc sendStreamGameUsingResultReceiver:[[_StreamGameResultReceiver alloc] init]
-                               withTransportOptions:stdGto
-                                     andDestination:@"SERVER"
-                                        withGolgiId:[GameData getInstanceId]];
-    
+                                  withTransportOptions:stdGto
+                                        andDestination:@"SERVER"
+                                           withGolgiId:[GameData getInstanceId]];
 }
 
 
@@ -593,6 +604,7 @@
 - (void)playPressed
 {
     NSLog(@"Play Pressed");
+    dataEnabled = [self getDataEnabled];
     gameState = STARTING;
     [self setupGameStartWithSeed:12345];
     [self showStateStuff];
@@ -601,6 +613,8 @@
 - (void)watchPressed
 {
     NSLog(@"Watch Pressed");
+    
+    dataEnabled = [self getDataEnabled];
     
     gameState = WATCHING;
     viewController.nameLabel.text = @"Waiting...";

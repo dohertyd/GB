@@ -47,7 +47,22 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    NSLog(@"Button Pressed: %ld", (long)buttonIndex);
     if(alertView == dataSharingAlert){
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if(buttonIndex == 0){
+            //
+            // The user pressed OK
+            //
+            [defaults setObject:@"YES" forKey:@"broadcastGames"];
+        }
+        else{
+            //
+            // The user opted out of sharing
+            //
+            [defaults setObject:@"NO" forKey:@"broadcastGames"];
+        }
+        [defaults synchronize];
         [GameData setWarningShown:TRUE];
         dataSharingAlert = nil;
     }
@@ -62,10 +77,10 @@
     
     if(![GameData getWarningShown]){
         dataSharingAlert = [[UIAlertView alloc] initWithTitle:@"GolgiBird Data Sharing"
-                                                      message:@"GolgiBird sends your Screen Name (default is 'Anonymous'), High-Score and Gameplay to our servers for sharing with other players.\n\nThis can be disabled in the\nGolgiBird Settings"
+                                                      message:@"GolgiBird sends your Screen Name (default is 'Anonymous'), High-Score and Gameplay to our servers for sharing with other players.\n\nThis can be enabled/disabled in the\nSettings App"
                                                      delegate:self
                                             cancelButtonTitle:@"OK"
-                                            otherButtonTitles:nil];
+                                            otherButtonTitles:@"Don't Send", nil];
         
         [dataSharingAlert show];
     }
