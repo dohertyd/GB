@@ -14,19 +14,19 @@ fi
 
 PKG_DIR=`dirname "$0"`
 
-LATEST_PKG=`ls ~/Golgi-Apple-Pkg | sort | tail -1`
+LATEST_PKG=`ls ~/Golgi-Pkg | sort | tail -1`
 
 LIBS_DONE=0
 GJAR=""
 NEW_CGEN=""
 
-for d in ~/Dropbox/GOLGI-IOS-LOCAL-BUILD ~/Golgi-Apple-Pkg/$LATEST_PKG/common; do
+for d in ~/Dropbox/GOLGI-IOS-LOCAL-BUILD ~/Golgi-Pkg/$LATEST_PKG/common; do
     if [ "$GJAR" = "" -a -f $d/garrick_combined.jar ]; then
         GJAR="$d/garrick_combined.jar"
     fi
 done
 
-for d in ~/Dropbox/GOLGI-IOS-LOCAL-BUILD ~/Golgi-Apple-Pkg/$LATEST_PKG/iOS; do
+for d in ~/Dropbox/GOLGI-IOS-LOCAL-BUILD ~/Golgi-Pkg/$LATEST_PKG/iOS; do
     if [ "$CGEN" = "" -a -f $d/$CG_DOT_SH ]; then
         CGEN="$d/$CG_DOT_SH"
     fi
@@ -48,7 +48,7 @@ fi
 
 TGT="$PROJECT_DIR/$PROJECT_NAME"
 
-for d in ~/Dropbox/GOLGI-IOS-LOCAL-BUILD ~/Golgi-Apple-Pkg/$LATEST_PKG/iOS; do
+for d in ~/Dropbox/GOLGI-IOS-LOCAL-BUILD ~/Golgi-Pkg/$LATEST_PKG/iOS; do
     if [ $LIBS_DONE -eq 0 -a -d $d ]; then
         LIBS_DONE=1
         for f in libGolgi.a libGolgi.h libGolgiLite.a; do
