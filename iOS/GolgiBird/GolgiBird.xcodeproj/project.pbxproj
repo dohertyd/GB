@@ -23,7 +23,6 @@
 		9683964C18B24C6F00F5E1F4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9683962B18B24C6E00F5E1F4 /* UIKit.framework */; };
 		9683965418B24C6F00F5E1F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9683965218B24C6F00F5E1F4 /* InfoPlist.strings */; };
 		9683965618B24C6F00F5E1F4 /* Golgi_BirdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9683965518B24C6F00F5E1F4 /* Golgi_BirdTests.m */; };
-		9683966018B24C9600F5E1F4 /* golgi_gen.sh in Resources */ = {isa = PBXBuildFile; fileRef = 9683965F18B24C9600F5E1F4 /* golgi_gen.sh */; };
 		9683966A18B252CB00F5E1F4 /* player.png in Resources */ = {isa = PBXBuildFile; fileRef = 9683966618B252CB00F5E1F4 /* player.png */; };
 		9683966B18B252CB00F5E1F4 /* pipe.png in Resources */ = {isa = PBXBuildFile; fileRef = 9683966718B252CB00F5E1F4 /* pipe.png */; };
 		9683966C18B252CB00F5E1F4 /* pipe_top.png in Resources */ = {isa = PBXBuildFile; fileRef = 9683966818B252CB00F5E1F4 /* pipe_top.png */; };
@@ -75,7 +74,6 @@
 		9683965118B24C6F00F5E1F4 /* GolgiBirdTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GolgiBirdTests-Info.plist"; sourceTree = "<group>"; };
 		9683965318B24C6F00F5E1F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9683965518B24C6F00F5E1F4 /* Golgi_BirdTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Golgi_BirdTests.m; sourceTree = "<group>"; };
-		9683965F18B24C9600F5E1F4 /* golgi_gen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = golgi_gen.sh; sourceTree = "<group>"; };
 		9683966618B252CB00F5E1F4 /* player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player.png; sourceTree = "<group>"; };
 		9683966718B252CB00F5E1F4 /* pipe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pipe.png; sourceTree = "<group>"; };
 		9683966818B252CB00F5E1F4 /* pipe_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pipe_top.png; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 				96C1B8B918B51B1100172130 /* TapTelegraphSvcWrapper.h */,
 				96C1B8BA18B51B1100172130 /* TapTelegraphSvcWrapper.m */,
 				D39A4F7B192CCB0300240A40 /* golgi.sh */,
-				9683965F18B24C9600F5E1F4 /* golgi_gen.sh */,
 				9683963618B24C6E00F5E1F4 /* AppDelegate.h */,
 				9683963718B24C6E00F5E1F4 /* AppDelegate.m */,
 				9683963918B24C6E00F5E1F4 /* Main_iPhone.storyboard */,
@@ -342,7 +339,6 @@
 				967037C918E1A7E900F0738C /* fork_me.png in Resources */,
 				9683964318B24C6F00F5E1F4 /* Images.xcassets in Resources */,
 				9683963B18B24C6E00F5E1F4 /* Main_iPhone.storyboard in Resources */,
-				9683966018B24C9600F5E1F4 /* golgi_gen.sh in Resources */,
 				9683963218B24C6E00F5E1F4 /* InfoPlist.strings in Resources */,
 				9683966D18B252CB00F5E1F4 /* skyline.png in Resources */,
 			);
