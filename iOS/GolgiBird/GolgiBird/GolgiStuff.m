@@ -35,29 +35,15 @@
     NSLog(@"Registering with golgiId: '%@'", ourId);
     // [Golgi setOption:@"USE_DEV_CLUSTER" withValue:@"0"];
     
-    [Golgi registerWithDevId:GOLGIBIRD_DEV_KEY
-                       appId:GOLGIBIRD_APP_KEY
-                      instId:ourId
-                  andAPIUser:self];
-}
-
-//
-// Registration worked
-//
-
-- (void)golgiRegistrationSuccess
-{
-    NSLog(@"Golgi Registration: PASS");
+    [Golgi registerWithDevId:GOLGIBIRD_DEV_KEY appId:GOLGIBIRD_APP_KEY instId:ourId andResultHandler:^(NSString *errorText) {
+        if(errorText == nil){
+            NSLog(@"Golgi Registration: PASS");
+        }
+        else{
+            NSLog(@"Golgi Registration: FAIL => '%@'", errorText);
+        }
+    }];
     
-}
-
-//
-// Registration failed
-//
-
-- (void)golgiRegistrationFailure:(NSString *)errorText
-{
-    NSLog(@"Golgi Registration: FAIL => '%@'", errorText);
 }
 
 - (void)setPushId:(NSString *)_pushId

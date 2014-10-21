@@ -160,31 +160,31 @@
 
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
 
     if(golgiIdIsSet){
-        [str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:golgiId]];
+        [_str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:golgiId]];
     }
     if(nameIsSet){
-        [str appendFormat:@"%@2: \"%@\"\n", prefix, [CSL  NTLEscapeString:name]];
+        [_str appendFormat:@"%@2: \"%@\"\n", prefix, [CSL  NTLEscapeString:name]];
     }
     if(hiScoreIsSet){
-        [str appendFormat:@"%@3: %ld\n", prefix, (long)hiScore];
+        [_str appendFormat:@"%@3: %ld\n", prefix, (long)hiScore];
     }
     if(gameIdIsSet){
-        [str appendFormat:@"%@4: \"%@\"\n", prefix, [CSL  NTLEscapeString:gameId]];
+        [_str appendFormat:@"%@4: \"%@\"\n", prefix, [CSL  NTLEscapeString:gameId]];
     }
     if(gameSeedIsSet){
-        [str appendFormat:@"%@5: %ld\n", prefix, (long)gameSeed];
+        [_str appendFormat:@"%@5: %ld\n", prefix, (long)gameSeed];
     }
     if(appVerIsSet){
-        [str appendFormat:@"%@6: %ld\n", prefix, (long)appVer];
+        [_str appendFormat:@"%@6: %ld\n", prefix, (long)appVer];
     }
     if(osIsSet){
-        [str appendFormat:@"%@7: \"%@\"\n", prefix, [CSL  NTLEscapeString:os]];
+        [_str appendFormat:@"%@7: \"%@\"\n", prefix, [CSL  NTLEscapeString:os]];
     }
 
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 
 - (PlayerInfo *)init
@@ -354,28 +354,28 @@
 
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
 
     if(gameIdIsSet){
-        [str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:gameId]];
+        [_str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:gameId]];
     }
     if(screenOffsetIsSet){
-        [str appendFormat:@"%@2: %ld\n", prefix, (long)screenOffset];
+        [_str appendFormat:@"%@2: %ld\n", prefix, (long)screenOffset];
     }
     if(playerYIsSet){
-        [str appendFormat:@"%@3: %ld\n", prefix, (long)playerY];
+        [_str appendFormat:@"%@3: %ld\n", prefix, (long)playerY];
     }
     if(deltaYIsSet){
-        [str appendFormat:@"%@4: %ld\n", prefix, (long)deltaY];
+        [_str appendFormat:@"%@4: %ld\n", prefix, (long)deltaY];
     }
     if(indexIsSet){
-        [str appendFormat:@"%@5: %ld\n", prefix, (long)index];
+        [_str appendFormat:@"%@5: %ld\n", prefix, (long)index];
     }
     if(scoreIsSet){
-        [str appendFormat:@"%@6: %ld\n", prefix, (long)score];
+        [_str appendFormat:@"%@6: %ld\n", prefix, (long)score];
     }
 
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 
 - (TapData *)init
@@ -503,22 +503,22 @@
 
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
 
     if(gameIdIsSet){
-        [str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:gameId]];
+        [_str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:gameId]];
     }
     if(screenOffsetIsSet){
-        [str appendFormat:@"%@2: %ld\n", prefix, (long)screenOffset];
+        [_str appendFormat:@"%@2: %ld\n", prefix, (long)screenOffset];
     }
     if(playerYIsSet){
-        [str appendFormat:@"%@3: %ld\n", prefix, (long)playerY];
+        [_str appendFormat:@"%@3: %ld\n", prefix, (long)playerY];
     }
     if(scoreIsSet){
-        [str appendFormat:@"%@4: %ld\n", prefix, (long)score];
+        [_str appendFormat:@"%@4: %ld\n", prefix, (long)score];
     }
 
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 
 - (GameOverData *)init
@@ -604,16 +604,16 @@
 
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
 
     if(nameIsSet){
-        [str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:name]];
+        [_str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:name]];
     }
     if(scoreIsSet){
-        [str appendFormat:@"%@2: %ld\n", prefix, (long)score];
+        [_str appendFormat:@"%@2: %ld\n", prefix, (long)score];
     }
 
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 
 - (HiScoreData *)init
@@ -673,11 +673,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(playerInfoIsSet){
-        [str appendString:[playerInfo serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
+        [_str appendString:[playerInfo serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_startGame_reqArg *)init
 {
@@ -744,14 +744,14 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_startGame_rspArg *)init
 {
@@ -804,11 +804,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(tapDataIsSet){
-        [str appendString:[tapData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
+        [_str appendString:[tapData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_sendTap_reqArg *)init
 {
@@ -875,14 +875,14 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_sendTap_rspArg *)init
 {
@@ -935,11 +935,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(gameOverDataIsSet){
-        [str appendString:[gameOverData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
+        [_str appendString:[gameOverData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_gameOver_reqArg *)init
 {
@@ -1006,14 +1006,14 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_gameOver_rspArg *)init
 {
@@ -1063,11 +1063,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(golgiIdIsSet){
-        [str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:golgiId]];
+        [_str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:golgiId]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_streamGame_reqArg *)init
 {
@@ -1134,14 +1134,14 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_streamGame_rspArg *)init
 {
@@ -1191,11 +1191,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(pookyIsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)pooky];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)pooky];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_getHiScore_reqArg *)init
 {
@@ -1280,17 +1280,17 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(resultIsSet){
-        [str appendString:[result serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "2"]]];
+        [_str appendString:[result serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "2"]]];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_getHiScore_rspArg *)init
 {
@@ -1344,11 +1344,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(hiScoreDataIsSet){
-        [str appendString:[hiScoreData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
+        [_str appendString:[hiScoreData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_newHiScore_reqArg *)init
 {
@@ -1415,14 +1415,14 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_newHiScore_rspArg *)init
 {
@@ -1475,11 +1475,11 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(hiScoreDataIsSet){
-        [str appendString:[hiScoreData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
+        [_str appendString:[hiScoreData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_newPB_reqArg *)init
 {
@@ -1546,14 +1546,14 @@
 }
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
-    NSMutableString *str = [[NSMutableString alloc] init];
+    NSMutableString *_str = [[NSMutableString alloc] init];
     if(internalSuccess_IsSet){
-        [str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
+        [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
-        [str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
+        [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
-    return [NSString stringWithString:str];
+    return [NSString stringWithString:_str];
 }
 - (TapTelegraph_newPB_rspArg *)init
 {
@@ -1567,6 +1567,15 @@
     return self;
 }
 @end
+@implementation TapTelegraphStartGameExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphStartGameExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface StartGameInternalResultSender : NSObject <TapTelegraphStartGameResultSender>
 {
@@ -1577,6 +1586,11 @@
 - (StartGameInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation StartGameInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (StartGameInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -1609,9 +1623,11 @@
 @interface StartGameInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphStartGameRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo * playerInfo);
 }
 
 - (StartGameInternalRequestHandler *)initWithReceiver:(id<TapTelegraphStartGameRequestReceiver>)receiver;
+- (StartGameInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo * playerInfo))userHandler;
 @end
 
 @implementation StartGameInternalRequestHandler
@@ -1628,7 +1644,11 @@
         StartGameInternalResultSender *resultSender;
         resultSender = [StartGameInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver startGameWithResultSender:resultSender andPlayerInfo:[req getPlayerInfo]];
+        if(receiver != nil){
+            [receiver startGameWithResultSender:resultSender andPlayerInfo:[req getPlayerInfo]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getPlayerInfo]);    }
     }
 }
 
@@ -1639,33 +1659,59 @@
 
     return self;
 }
+- (StartGameInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo * playerInfo))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface StartGameInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphStartGameResultReceiver> receiver;
+    void (^handler)(TapTelegraphStartGameExceptionBundle *exceptionBundle);
 }
 
-- (StartGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStartGameResultReceiver>)receiver;
+- (StartGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStartGameResultReceiver>)receiver orHandler:(void (^)(TapTelegraphStartGameExceptionBundle *exceptionBundle))handler;
 @end
 @implementation StartGameInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_startGame_rspArg *rsp = [TapTelegraph_startGame_rspArg deserialiseFromString:payload];
+    TapTelegraphStartGameExceptionBundle *exBundle = [[TapTelegraphStartGameExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver success];
+        if(receiver != nil){
+            [receiver success];
+        }
+        else{ // Must have a handler
+            handler(nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'startGame' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -1678,15 +1724,25 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (StartGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStartGameResultReceiver>)_receiver
+- (StartGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStartGameResultReceiver>)_receiver orHandler:(void (^)(TapTelegraphStartGameExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
 @end
 
+@implementation TapTelegraphSendTapExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphSendTapExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface SendTapInternalResultSender : NSObject <TapTelegraphSendTapResultSender>
 {
@@ -1697,6 +1753,11 @@
 - (SendTapInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation SendTapInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (SendTapInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -1729,9 +1790,11 @@
 @interface SendTapInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphSendTapRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphSendTapResultSender> resultSender, TapData * tapData);
 }
 
 - (SendTapInternalRequestHandler *)initWithReceiver:(id<TapTelegraphSendTapRequestReceiver>)receiver;
+- (SendTapInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphSendTapResultSender> resultSender, TapData * tapData))userHandler;
 @end
 
 @implementation SendTapInternalRequestHandler
@@ -1748,7 +1811,11 @@
         SendTapInternalResultSender *resultSender;
         resultSender = [SendTapInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver sendTapWithResultSender:resultSender andTapData:[req getTapData]];
+        if(receiver != nil){
+            [receiver sendTapWithResultSender:resultSender andTapData:[req getTapData]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getTapData]);    }
     }
 }
 
@@ -1759,33 +1826,59 @@
 
     return self;
 }
+- (SendTapInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphSendTapResultSender> resultSender, TapData * tapData))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface SendTapInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphSendTapResultReceiver> receiver;
+    void (^handler)(TapTelegraphSendTapExceptionBundle *exceptionBundle);
 }
 
-- (SendTapInternalResponseHandler *)initWithReceiver:(id<TapTelegraphSendTapResultReceiver>)receiver;
+- (SendTapInternalResponseHandler *)initWithReceiver:(id<TapTelegraphSendTapResultReceiver>)receiver orHandler:(void (^)(TapTelegraphSendTapExceptionBundle *exceptionBundle))handler;
 @end
 @implementation SendTapInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_sendTap_rspArg *rsp = [TapTelegraph_sendTap_rspArg deserialiseFromString:payload];
+    TapTelegraphSendTapExceptionBundle *exBundle = [[TapTelegraphSendTapExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver success];
+        if(receiver != nil){
+            [receiver success];
+        }
+        else{ // Must have a handler
+            handler(nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'sendTap' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -1798,15 +1891,25 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (SendTapInternalResponseHandler *)initWithReceiver:(id<TapTelegraphSendTapResultReceiver>)_receiver
+- (SendTapInternalResponseHandler *)initWithReceiver:(id<TapTelegraphSendTapResultReceiver>)_receiver orHandler:(void (^)(TapTelegraphSendTapExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
 @end
 
+@implementation TapTelegraphGameOverExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphGameOverExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface GameOverInternalResultSender : NSObject <TapTelegraphGameOverResultSender>
 {
@@ -1817,6 +1920,11 @@
 - (GameOverInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation GameOverInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (GameOverInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -1849,9 +1957,11 @@
 @interface GameOverInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphGameOverRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphGameOverResultSender> resultSender, GameOverData * gameOverData);
 }
 
 - (GameOverInternalRequestHandler *)initWithReceiver:(id<TapTelegraphGameOverRequestReceiver>)receiver;
+- (GameOverInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphGameOverResultSender> resultSender, GameOverData * gameOverData))userHandler;
 @end
 
 @implementation GameOverInternalRequestHandler
@@ -1868,7 +1978,11 @@
         GameOverInternalResultSender *resultSender;
         resultSender = [GameOverInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver gameOverWithResultSender:resultSender andGameOverData:[req getGameOverData]];
+        if(receiver != nil){
+            [receiver gameOverWithResultSender:resultSender andGameOverData:[req getGameOverData]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getGameOverData]);    }
     }
 }
 
@@ -1879,33 +1993,59 @@
 
     return self;
 }
+- (GameOverInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphGameOverResultSender> resultSender, GameOverData * gameOverData))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface GameOverInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphGameOverResultReceiver> receiver;
+    void (^handler)(TapTelegraphGameOverExceptionBundle *exceptionBundle);
 }
 
-- (GameOverInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGameOverResultReceiver>)receiver;
+- (GameOverInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGameOverResultReceiver>)receiver orHandler:(void (^)(TapTelegraphGameOverExceptionBundle *exceptionBundle))handler;
 @end
 @implementation GameOverInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_gameOver_rspArg *rsp = [TapTelegraph_gameOver_rspArg deserialiseFromString:payload];
+    TapTelegraphGameOverExceptionBundle *exBundle = [[TapTelegraphGameOverExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver success];
+        if(receiver != nil){
+            [receiver success];
+        }
+        else{ // Must have a handler
+            handler(nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'gameOver' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -1918,15 +2058,25 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (GameOverInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGameOverResultReceiver>)_receiver
+- (GameOverInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGameOverResultReceiver>)_receiver orHandler:(void (^)(TapTelegraphGameOverExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
 @end
 
+@implementation TapTelegraphStreamGameExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphStreamGameExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface StreamGameInternalResultSender : NSObject <TapTelegraphStreamGameResultSender>
 {
@@ -1937,6 +2087,11 @@
 - (StreamGameInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation StreamGameInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (StreamGameInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -1969,9 +2124,11 @@
 @interface StreamGameInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphStreamGameRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphStreamGameResultSender> resultSender, NSString * golgiId);
 }
 
 - (StreamGameInternalRequestHandler *)initWithReceiver:(id<TapTelegraphStreamGameRequestReceiver>)receiver;
+- (StreamGameInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphStreamGameResultSender> resultSender, NSString * golgiId))userHandler;
 @end
 
 @implementation StreamGameInternalRequestHandler
@@ -1988,7 +2145,11 @@
         StreamGameInternalResultSender *resultSender;
         resultSender = [StreamGameInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver streamGameWithResultSender:resultSender andGolgiId:[req getGolgiId]];
+        if(receiver != nil){
+            [receiver streamGameWithResultSender:resultSender andGolgiId:[req getGolgiId]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getGolgiId]);    }
     }
 }
 
@@ -1999,33 +2160,59 @@
 
     return self;
 }
+- (StreamGameInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphStreamGameResultSender> resultSender, NSString * golgiId))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface StreamGameInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphStreamGameResultReceiver> receiver;
+    void (^handler)(TapTelegraphStreamGameExceptionBundle *exceptionBundle);
 }
 
-- (StreamGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStreamGameResultReceiver>)receiver;
+- (StreamGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStreamGameResultReceiver>)receiver orHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *exceptionBundle))handler;
 @end
 @implementation StreamGameInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_streamGame_rspArg *rsp = [TapTelegraph_streamGame_rspArg deserialiseFromString:payload];
+    TapTelegraphStreamGameExceptionBundle *exBundle = [[TapTelegraphStreamGameExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver success];
+        if(receiver != nil){
+            [receiver success];
+        }
+        else{ // Must have a handler
+            handler(nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'streamGame' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -2038,15 +2225,25 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (StreamGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStreamGameResultReceiver>)_receiver
+- (StreamGameInternalResponseHandler *)initWithReceiver:(id<TapTelegraphStreamGameResultReceiver>)_receiver orHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
 @end
 
+@implementation TapTelegraphGetHiScoreExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphGetHiScoreExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface GetHiScoreInternalResultSender : NSObject <TapTelegraphGetHiScoreResultSender>
 {
@@ -2057,6 +2254,11 @@
 - (GetHiScoreInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation GetHiScoreInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (GetHiScoreInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -2090,9 +2292,11 @@
 @interface GetHiScoreInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphGetHiScoreRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphGetHiScoreResultSender> resultSender, NSInteger pooky);
 }
 
 - (GetHiScoreInternalRequestHandler *)initWithReceiver:(id<TapTelegraphGetHiScoreRequestReceiver>)receiver;
+- (GetHiScoreInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphGetHiScoreResultSender> resultSender, NSInteger pooky))userHandler;
 @end
 
 @implementation GetHiScoreInternalRequestHandler
@@ -2109,7 +2313,11 @@
         GetHiScoreInternalResultSender *resultSender;
         resultSender = [GetHiScoreInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver getHiScoreWithResultSender:resultSender andPooky:[req getPooky]];
+        if(receiver != nil){
+            [receiver getHiScoreWithResultSender:resultSender andPooky:[req getPooky]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getPooky]);    }
     }
 }
 
@@ -2120,33 +2328,59 @@
 
     return self;
 }
+- (GetHiScoreInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphGetHiScoreResultSender> resultSender, NSInteger pooky))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface GetHiScoreInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphGetHiScoreResultReceiver> receiver;
+    void (^handler)(HiScoreData *Result,TapTelegraphGetHiScoreExceptionBundle *exceptionBundle);
 }
 
-- (GetHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)receiver;
+- (GetHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)receiver orHandler:(void (^)(HiScoreData *Result,TapTelegraphGetHiScoreExceptionBundle *exceptionBundle))handler;
 @end
 @implementation GetHiScoreInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_getHiScore_rspArg *rsp = [TapTelegraph_getHiScore_rspArg deserialiseFromString:payload];
+    TapTelegraphGetHiScoreExceptionBundle *exBundle = [[TapTelegraphGetHiScoreExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(nil, exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver successWithResult:[rsp getResult]];
+        if(receiver != nil){
+            [receiver successWithResult:[rsp getResult]];
+        }
+        else{ // Must have a handler
+            handler([rsp getResult], nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(nil, exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'getHiScore' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -2159,15 +2393,25 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (GetHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)_receiver
+- (GetHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)_receiver orHandler:(void (^)(HiScoreData *Result,TapTelegraphGetHiScoreExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
 @end
 
+@implementation TapTelegraphNewHiScoreExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphNewHiScoreExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface NewHiScoreInternalResultSender : NSObject <TapTelegraphNewHiScoreResultSender>
 {
@@ -2178,6 +2422,11 @@
 - (NewHiScoreInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation NewHiScoreInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (NewHiScoreInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -2210,9 +2459,11 @@
 @interface NewHiScoreInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphNewHiScoreRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData * hiScoreData);
 }
 
 - (NewHiScoreInternalRequestHandler *)initWithReceiver:(id<TapTelegraphNewHiScoreRequestReceiver>)receiver;
+- (NewHiScoreInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData * hiScoreData))userHandler;
 @end
 
 @implementation NewHiScoreInternalRequestHandler
@@ -2229,7 +2480,11 @@
         NewHiScoreInternalResultSender *resultSender;
         resultSender = [NewHiScoreInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver newHiScoreWithResultSender:resultSender andHiScoreData:[req getHiScoreData]];
+        if(receiver != nil){
+            [receiver newHiScoreWithResultSender:resultSender andHiScoreData:[req getHiScoreData]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getHiScoreData]);    }
     }
 }
 
@@ -2240,33 +2495,59 @@
 
     return self;
 }
+- (NewHiScoreInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData * hiScoreData))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface NewHiScoreInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphNewHiScoreResultReceiver> receiver;
+    void (^handler)(TapTelegraphNewHiScoreExceptionBundle *exceptionBundle);
 }
 
-- (NewHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)receiver;
+- (NewHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)receiver orHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *exceptionBundle))handler;
 @end
 @implementation NewHiScoreInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_newHiScore_rspArg *rsp = [TapTelegraph_newHiScore_rspArg deserialiseFromString:payload];
+    TapTelegraphNewHiScoreExceptionBundle *exBundle = [[TapTelegraphNewHiScoreExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver success];
+        if(receiver != nil){
+            [receiver success];
+        }
+        else{ // Must have a handler
+            handler(nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'newHiScore' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -2279,15 +2560,25 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (NewHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)_receiver
+- (NewHiScoreInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)_receiver orHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
 @end
 
+@implementation TapTelegraphNewPBExceptionBundle
+@synthesize golgiException;
+- (TapTelegraphNewPBExceptionBundle *) init
+{
+    self = [super init];
+    golgiException = nil;
+    return self;
+}
+@end
 
 @interface NewPBInternalResultSender : NSObject <TapTelegraphNewPBResultSender>
 {
@@ -2298,6 +2589,11 @@
 - (NewPBInternalResultSender *) initWithSender:(NSString *)sender andMessageId:(NSString *)msgId;
 @end
 @implementation NewPBInternalResultSender
+- (NSString *)getRequestSenderId
+{
+    return sender;
+}
+
 - (NewPBInternalResultSender *) initWithSender:(NSString *)_sender andMessageId:(NSString *)_msgId
 {
     self = [self init];
@@ -2330,9 +2626,11 @@
 @interface NewPBInternalRequestHandler : NSObject <GolgiInternalInboundRequestHandler>
 {
     id<TapTelegraphNewPBRequestReceiver> receiver;
+    void (^userHandler)(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData * hiScoreData);
 }
 
 - (NewPBInternalRequestHandler *)initWithReceiver:(id<TapTelegraphNewPBRequestReceiver>)receiver;
+- (NewPBInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData * hiScoreData))userHandler;
 @end
 
 @implementation NewPBInternalRequestHandler
@@ -2349,7 +2647,11 @@
         NewPBInternalResultSender *resultSender;
         resultSender = [NewPBInternalResultSender alloc];
         resultSender = [resultSender initWithSender:sender andMessageId:msgId];
-        [receiver newPBWithResultSender:resultSender andHiScoreData:[req getHiScoreData]];
+        if(receiver != nil){
+            [receiver newPBWithResultSender:resultSender andHiScoreData:[req getHiScoreData]];
+        }
+        else if(userHandler != nil){
+            userHandler(resultSender, [req getHiScoreData]);    }
     }
 }
 
@@ -2360,33 +2662,59 @@
 
     return self;
 }
+- (NewPBInternalRequestHandler *)initWithHandler:(void (^)(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData * hiScoreData))_userHandler
+{
+    self = [self init];
+    userHandler = _userHandler;
+
+    return self;
+}
 @end
 
 @interface NewPBInternalResponseHandler : NSObject <GolgiInternalInboundResponseHandler>
 {
     id<TapTelegraphNewPBResultReceiver> receiver;
+    void (^handler)(TapTelegraphNewPBExceptionBundle *exceptionBundle);
 }
 
-- (NewPBInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewPBResultReceiver>)receiver;
+- (NewPBInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewPBResultReceiver>)receiver orHandler:(void (^)(TapTelegraphNewPBExceptionBundle *exceptionBundle))handler;
 @end
 @implementation NewPBInternalResponseHandler
 
 - (void)processResponsePayload:(NSString *)payload
 {
     TapTelegraph_newPB_rspArg *rsp = [TapTelegraph_newPB_rspArg deserialiseFromString:payload];
+    TapTelegraphNewPBExceptionBundle *exBundle = [[TapTelegraphNewPBExceptionBundle alloc] init];
 
     if(rsp == nil){
         GolgiException *golgiException = [[GolgiException alloc]init];
 
         [golgiException setErrText:@"Corrupt Response"];
         [golgiException setErrType:GOLGI_ERRTYPE_PAYLOAD_MISMATCH];
-        [receiver failureWithGolgiException:golgiException];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:golgiException];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = golgiException;
+            handler(exBundle);
+        }
     }
     else if(rsp.internalSuccess_IsSet && ([rsp getInternalSuccess_] != 0)){
-        [receiver success];
+        if(receiver != nil){
+            [receiver success];
+        }
+        else{ // Must have a handler
+            handler(nil);
+        }
     }
     else if(rsp.golgiExceptionIsSet){
-        [receiver failureWithGolgiException:[rsp getGolgiException]];
+        if(receiver != nil){
+            [receiver failureWithGolgiException:[rsp getGolgiException]];
+        }
+        else{ // Must have a handler
+            exBundle.golgiException = [rsp getGolgiException];
+            handler(exBundle);
+        }
     }
     else{
         NSLog(@"WARNING: result for 'newPB' in Golgi Service 'TapTelegraph' has no expected response fields set!");
@@ -2399,10 +2727,11 @@
 	[receiver failureWithGolgiException:golgiException];
 }
 
-- (NewPBInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewPBResultReceiver>)_receiver
+- (NewPBInternalResponseHandler *)initWithReceiver:(id<TapTelegraphNewPBResultReceiver>)_receiver orHandler:(void (^)(TapTelegraphNewPBExceptionBundle *exceptionBundle))_handler
 {
     self = [self init];
     receiver = _receiver;
+    handler = _handler;
     return self;
 }
 
@@ -2419,21 +2748,50 @@
 //
 // startGame
 //
++ (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
+{
+    [self sendStartGameUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withPlayerInfo:playerInfo];
+}
+
++ (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
+{
+    [self sendStartGameUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withPlayerInfo:playerInfo];
+}
+
++ (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
+{
+    [self sendStartGameUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withPlayerInfo:playerInfo];
+}
+
 + (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
 {
-    [self sendStartGameUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withPlayerInfo:playerInfo];
+    [self sendStartGameUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withPlayerInfo:playerInfo];
 }
 
 //
-// startGame with transport options
+// startGame with transport options and receiver/handler
 //
-+ (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
++ (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
 {
     NSString *_payload;
     TapTelegraph_startGame_reqArg *_reqArg = [[TapTelegraph_startGame_reqArg alloc] init];
     StartGameInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [StartGameInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setPlayerInfo:playerInfo];
     _payload = [_reqArg serialise];
@@ -2441,6 +2799,11 @@
     [Golgi sendRequestPayload:_payload withTransportOptions:options to:_dst withMethod:@"startGame.TapTelegraph" andResponseHandler:_iRspHndlr];
 
 }
+
+//
+// startGame using closure
+//
+// + (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo
 
 + (void)registerStartGameRequestReceiver:(id<TapTelegraphStartGameRequestReceiver>)requestReceiver
 {
@@ -2450,24 +2813,61 @@
     [Golgi registerRequestHandler:reqHandler forMethod:@"startGame.TapTelegraph"];
 }
 
-//
-// sendTap
-//
-+ (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver andDestination:(NSString *)_dst withTapData:(TapData *)tapData
++ (void)registerStartGameRequestHandler:(void (^)(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo * playerInfo))requestHandler;
 {
-    [self sendSendTapUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withTapData:tapData];
+    StartGameInternalRequestHandler *reqHandler;
+    reqHandler = [StartGameInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"startGame.TapTelegraph"];
 }
 
 //
-// sendTap with transport options
+// sendTap
 //
++ (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData
+{
+    [self sendSendTapUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withTapData:tapData];
+}
+
++ (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler andDestination:(NSString *)_dst withTapData:(TapData *)tapData
+{
+    [self sendSendTapUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withTapData:tapData];
+}
+
 + (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData
+{
+    [self sendSendTapUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withTapData:tapData];
+}
+
++ (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver andDestination:(NSString *)_dst withTapData:(TapData *)tapData
+{
+    [self sendSendTapUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withTapData:tapData];
+}
+
+//
+// sendTap with transport options and receiver/handler
+//
++ (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData
 {
     NSString *_payload;
     TapTelegraph_sendTap_reqArg *_reqArg = [[TapTelegraph_sendTap_reqArg alloc] init];
     SendTapInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [SendTapInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setTapData:tapData];
     _payload = [_reqArg serialise];
@@ -2475,6 +2875,11 @@
     [Golgi sendRequestPayload:_payload withTransportOptions:options to:_dst withMethod:@"sendTap.TapTelegraph" andResponseHandler:_iRspHndlr];
 
 }
+
+//
+// sendTap using closure
+//
+// + (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler andDestination:(NSString *)_dst withTapData:(TapData *)tapData
 
 + (void)registerSendTapRequestReceiver:(id<TapTelegraphSendTapRequestReceiver>)requestReceiver
 {
@@ -2484,24 +2889,61 @@
     [Golgi registerRequestHandler:reqHandler forMethod:@"sendTap.TapTelegraph"];
 }
 
-//
-// gameOver
-//
-+ (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
++ (void)registerSendTapRequestHandler:(void (^)(id<TapTelegraphSendTapResultSender> resultSender, TapData * tapData))requestHandler;
 {
-    [self sendGameOverUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withGameOverData:gameOverData];
+    SendTapInternalRequestHandler *reqHandler;
+    reqHandler = [SendTapInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"sendTap.TapTelegraph"];
 }
 
 //
-// gameOver with transport options
+// gameOver
 //
++ (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
+{
+    [self sendGameOverUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withGameOverData:gameOverData];
+}
+
++ (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
+{
+    [self sendGameOverUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withGameOverData:gameOverData];
+}
+
 + (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
+{
+    [self sendGameOverUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withGameOverData:gameOverData];
+}
+
++ (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
+{
+    [self sendGameOverUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withGameOverData:gameOverData];
+}
+
+//
+// gameOver with transport options and receiver/handler
+//
++ (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
 {
     NSString *_payload;
     TapTelegraph_gameOver_reqArg *_reqArg = [[TapTelegraph_gameOver_reqArg alloc] init];
     GameOverInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [GameOverInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setGameOverData:gameOverData];
     _payload = [_reqArg serialise];
@@ -2509,6 +2951,11 @@
     [Golgi sendRequestPayload:_payload withTransportOptions:options to:_dst withMethod:@"gameOver.TapTelegraph" andResponseHandler:_iRspHndlr];
 
 }
+
+//
+// gameOver using closure
+//
+// + (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData
 
 + (void)registerGameOverRequestReceiver:(id<TapTelegraphGameOverRequestReceiver>)requestReceiver
 {
@@ -2518,24 +2965,61 @@
     [Golgi registerRequestHandler:reqHandler forMethod:@"gameOver.TapTelegraph"];
 }
 
-//
-// streamGame
-//
-+ (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
++ (void)registerGameOverRequestHandler:(void (^)(id<TapTelegraphGameOverResultSender> resultSender, GameOverData * gameOverData))requestHandler;
 {
-    [self sendStreamGameUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withGolgiId:golgiId];
+    GameOverInternalRequestHandler *reqHandler;
+    reqHandler = [GameOverInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"gameOver.TapTelegraph"];
 }
 
 //
-// streamGame with transport options
+// streamGame
 //
++ (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
+{
+    [self sendStreamGameUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withGolgiId:golgiId];
+}
+
++ (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
+{
+    [self sendStreamGameUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withGolgiId:golgiId];
+}
+
 + (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
+{
+    [self sendStreamGameUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withGolgiId:golgiId];
+}
+
++ (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
+{
+    [self sendStreamGameUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withGolgiId:golgiId];
+}
+
+//
+// streamGame with transport options and receiver/handler
+//
++ (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
 {
     NSString *_payload;
     TapTelegraph_streamGame_reqArg *_reqArg = [[TapTelegraph_streamGame_reqArg alloc] init];
     StreamGameInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [StreamGameInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setGolgiId:golgiId];
     _payload = [_reqArg serialise];
@@ -2543,6 +3027,11 @@
     [Golgi sendRequestPayload:_payload withTransportOptions:options to:_dst withMethod:@"streamGame.TapTelegraph" andResponseHandler:_iRspHndlr];
 
 }
+
+//
+// streamGame using closure
+//
+// + (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId
 
 + (void)registerStreamGameRequestReceiver:(id<TapTelegraphStreamGameRequestReceiver>)requestReceiver
 {
@@ -2552,24 +3041,61 @@
     [Golgi registerRequestHandler:reqHandler forMethod:@"streamGame.TapTelegraph"];
 }
 
-//
-// getHiScore
-//
-+ (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
++ (void)registerStreamGameRequestHandler:(void (^)(id<TapTelegraphStreamGameResultSender> resultSender, NSString * golgiId))requestHandler;
 {
-    [self sendGetHiScoreUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withPooky:pooky];
+    StreamGameInternalRequestHandler *reqHandler;
+    reqHandler = [StreamGameInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"streamGame.TapTelegraph"];
 }
 
 //
-// getHiScore with transport options
+// getHiScore
 //
++ (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
+{
+    [self sendGetHiScoreUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withPooky:pooky];
+}
+
++ (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
+{
+    [self sendGetHiScoreUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withPooky:pooky];
+}
+
 + (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
+{
+    [self sendGetHiScoreUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withPooky:pooky];
+}
+
++ (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
+{
+    [self sendGetHiScoreUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withPooky:pooky];
+}
+
+//
+// getHiScore with transport options and receiver/handler
+//
++ (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver orResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
 {
     NSString *_payload;
     TapTelegraph_getHiScore_reqArg *_reqArg = [[TapTelegraph_getHiScore_reqArg alloc] init];
     GetHiScoreInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [GetHiScoreInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setPooky:pooky];
     _payload = [_reqArg serialise];
@@ -2577,6 +3103,11 @@
     [Golgi sendRequestPayload:_payload withTransportOptions:options to:_dst withMethod:@"getHiScore.TapTelegraph" andResponseHandler:_iRspHndlr];
 
 }
+
+//
+// getHiScore using closure
+//
+// + (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPooky:(NSInteger)pooky
 
 + (void)registerGetHiScoreRequestReceiver:(id<TapTelegraphGetHiScoreRequestReceiver>)requestReceiver
 {
@@ -2586,24 +3117,61 @@
     [Golgi registerRequestHandler:reqHandler forMethod:@"getHiScore.TapTelegraph"];
 }
 
-//
-// newHiScore
-//
-+ (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
++ (void)registerGetHiScoreRequestHandler:(void (^)(id<TapTelegraphGetHiScoreResultSender> resultSender, NSInteger pooky))requestHandler;
 {
-    [self sendNewHiScoreUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withHiScoreData:hiScoreData];
+    GetHiScoreInternalRequestHandler *reqHandler;
+    reqHandler = [GetHiScoreInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"getHiScore.TapTelegraph"];
 }
 
 //
-// newHiScore with transport options
+// newHiScore
 //
++ (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewHiScoreUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
++ (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewHiScoreUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
 + (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewHiScoreUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
++ (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewHiScoreUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
+//
+// newHiScore with transport options and receiver/handler
+//
++ (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
 {
     NSString *_payload;
     TapTelegraph_newHiScore_reqArg *_reqArg = [[TapTelegraph_newHiScore_reqArg alloc] init];
     NewHiScoreInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [NewHiScoreInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setHiScoreData:hiScoreData];
     _payload = [_reqArg serialise];
@@ -2611,6 +3179,11 @@
     [Golgi sendRequestPayload:_payload withTransportOptions:options to:_dst withMethod:@"newHiScore.TapTelegraph" andResponseHandler:_iRspHndlr];
 
 }
+
+//
+// newHiScore using closure
+//
+// + (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
 
 + (void)registerNewHiScoreRequestReceiver:(id<TapTelegraphNewHiScoreRequestReceiver>)requestReceiver
 {
@@ -2620,24 +3193,61 @@
     [Golgi registerRequestHandler:reqHandler forMethod:@"newHiScore.TapTelegraph"];
 }
 
-//
-// newPB
-//
-+ (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
++ (void)registerNewHiScoreRequestHandler:(void (^)(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData * hiScoreData))requestHandler;
 {
-    [self sendNewPBUsingResultReceiver:resultReceiver withTransportOptions:nil andDestination:_dst withHiScoreData:hiScoreData];
+    NewHiScoreInternalRequestHandler *reqHandler;
+    reqHandler = [NewHiScoreInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"newHiScore.TapTelegraph"];
 }
 
 //
-// newPB with transport options
+// newPB
 //
++ (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewPBUsingResultReceiver:nil
+        orResultHandler:resultHandler
+        withTransportOptions:options
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
++ (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewPBUsingResultHandler:resultHandler
+        withTransportOptions:nil
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
 + (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewPBUsingResultReceiver:resultReceiver
+        orResultHandler:nil
+        withTransportOptions:options
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
++ (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+{
+    [self sendNewPBUsingResultReceiver:resultReceiver
+        withTransportOptions:nil
+        andDestination:_dst
+        withHiScoreData:hiScoreData];
+}
+
+//
+// newPB with transport options and receiver/handler
+//
++ (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
 {
     NSString *_payload;
     TapTelegraph_newPB_reqArg *_reqArg = [[TapTelegraph_newPB_reqArg alloc] init];
     NewPBInternalResponseHandler *_iRspHndlr;
     _iRspHndlr = [NewPBInternalResponseHandler alloc];
-    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver];
+    _iRspHndlr = [_iRspHndlr initWithReceiver:resultReceiver orHandler:resultHandler];
 
     [_reqArg setHiScoreData:hiScoreData];
     _payload = [_reqArg serialise];
@@ -2646,11 +3256,24 @@
 
 }
 
+//
+// newPB using closure
+//
+// + (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData
+
 + (void)registerNewPBRequestReceiver:(id<TapTelegraphNewPBRequestReceiver>)requestReceiver
 {
     NewPBInternalRequestHandler *reqHandler;
     reqHandler = [NewPBInternalRequestHandler alloc];
     reqHandler = [reqHandler initWithReceiver:requestReceiver];
+    [Golgi registerRequestHandler:reqHandler forMethod:@"newPB.TapTelegraph"];
+}
+
++ (void)registerNewPBRequestHandler:(void (^)(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData * hiScoreData))requestHandler;
+{
+    NewPBInternalRequestHandler *reqHandler;
+    reqHandler = [NewPBInternalRequestHandler alloc];
+    reqHandler = [reqHandler initWithHandler:requestHandler];
     [Golgi registerRequestHandler:reqHandler forMethod:@"newPB.TapTelegraph"];
 }
 

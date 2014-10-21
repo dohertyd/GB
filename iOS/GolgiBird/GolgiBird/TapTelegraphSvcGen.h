@@ -448,6 +448,7 @@
 // startGame
 //
 @protocol TapTelegraphStartGameResultSender
+- (NSString *)getRequestSenderId;
 - (void)success;
 @end
 @protocol TapTelegraphStartGameResultReceiver
@@ -457,11 +458,18 @@
 @protocol TapTelegraphStartGameRequestReceiver
 - (void)startGameWithResultSender:(id<TapTelegraphStartGameResultSender>)resultSender andPlayerInfo:(PlayerInfo *)playerInfo;
 @end
+@interface TapTelegraphStartGameExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 //
 // sendTap
 //
 @protocol TapTelegraphSendTapResultSender
+- (NSString *)getRequestSenderId;
 - (void)success;
 @end
 @protocol TapTelegraphSendTapResultReceiver
@@ -471,11 +479,18 @@
 @protocol TapTelegraphSendTapRequestReceiver
 - (void)sendTapWithResultSender:(id<TapTelegraphSendTapResultSender>)resultSender andTapData:(TapData *)tapData;
 @end
+@interface TapTelegraphSendTapExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 //
 // gameOver
 //
 @protocol TapTelegraphGameOverResultSender
+- (NSString *)getRequestSenderId;
 - (void)success;
 @end
 @protocol TapTelegraphGameOverResultReceiver
@@ -485,11 +500,18 @@
 @protocol TapTelegraphGameOverRequestReceiver
 - (void)gameOverWithResultSender:(id<TapTelegraphGameOverResultSender>)resultSender andGameOverData:(GameOverData *)gameOverData;
 @end
+@interface TapTelegraphGameOverExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 //
 // streamGame
 //
 @protocol TapTelegraphStreamGameResultSender
+- (NSString *)getRequestSenderId;
 - (void)success;
 @end
 @protocol TapTelegraphStreamGameResultReceiver
@@ -499,11 +521,18 @@
 @protocol TapTelegraphStreamGameRequestReceiver
 - (void)streamGameWithResultSender:(id<TapTelegraphStreamGameResultSender>)resultSender andGolgiId:(NSString *)golgiId;
 @end
+@interface TapTelegraphStreamGameExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 //
 // getHiScore
 //
 @protocol TapTelegraphGetHiScoreResultSender
+- (NSString *)getRequestSenderId;
 - (void)successWithResult:(HiScoreData *)result;
 @end
 @protocol TapTelegraphGetHiScoreResultReceiver
@@ -513,11 +542,18 @@
 @protocol TapTelegraphGetHiScoreRequestReceiver
 - (void)getHiScoreWithResultSender:(id<TapTelegraphGetHiScoreResultSender>)resultSender andPooky:(NSInteger)pooky;
 @end
+@interface TapTelegraphGetHiScoreExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 //
 // newHiScore
 //
 @protocol TapTelegraphNewHiScoreResultSender
+- (NSString *)getRequestSenderId;
 - (void)success;
 @end
 @protocol TapTelegraphNewHiScoreResultReceiver
@@ -527,11 +563,18 @@
 @protocol TapTelegraphNewHiScoreRequestReceiver
 - (void)newHiScoreWithResultSender:(id<TapTelegraphNewHiScoreResultSender>)resultSender andHiScoreData:(HiScoreData *)hiScoreData;
 @end
+@interface TapTelegraphNewHiScoreExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 //
 // newPB
 //
 @protocol TapTelegraphNewPBResultSender
+- (NSString *)getRequestSenderId;
 - (void)success;
 @end
 @protocol TapTelegraphNewPBResultReceiver
@@ -541,34 +584,68 @@
 @protocol TapTelegraphNewPBRequestReceiver
 - (void)newPBWithResultSender:(id<TapTelegraphNewPBResultSender>)resultSender andHiScoreData:(HiScoreData *)hiScoreData;
 @end
+@interface TapTelegraphNewPBExceptionBundle: NSObject
+{
+    GolgiException * golgiException;
+}
+@property GolgiException * golgiException;
+@end
 
 @interface TapTelegraphSvc : NSObject
-+ (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
 + (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
++ (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
++ (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
++ (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
++ (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
 + (void)registerStartGameRequestReceiver:(id<TapTelegraphStartGameRequestReceiver>)requestReceiver;
++ (void)registerStartGameRequestHandler:(void (^)(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo * playerInfo))requestHandler;
 
-+ (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
 + (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
++ (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
++ (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
++ (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
++ (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
 + (void)registerSendTapRequestReceiver:(id<TapTelegraphSendTapRequestReceiver>)requestReceiver;
++ (void)registerSendTapRequestHandler:(void (^)(id<TapTelegraphSendTapResultSender> resultSender, TapData * tapData))requestHandler;
 
-+ (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
 + (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
++ (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
++ (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
++ (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
++ (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
 + (void)registerGameOverRequestReceiver:(id<TapTelegraphGameOverRequestReceiver>)requestReceiver;
++ (void)registerGameOverRequestHandler:(void (^)(id<TapTelegraphGameOverResultSender> resultSender, GameOverData * gameOverData))requestHandler;
 
-+ (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
 + (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
++ (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
++ (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
++ (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
++ (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
 + (void)registerStreamGameRequestReceiver:(id<TapTelegraphStreamGameRequestReceiver>)requestReceiver;
++ (void)registerStreamGameRequestHandler:(void (^)(id<TapTelegraphStreamGameResultSender> resultSender, NSString * golgiId))requestHandler;
 
-+ (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
 + (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
++ (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
++ (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
++ (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
++ (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver orResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
 + (void)registerGetHiScoreRequestReceiver:(id<TapTelegraphGetHiScoreRequestReceiver>)requestReceiver;
++ (void)registerGetHiScoreRequestHandler:(void (^)(id<TapTelegraphGetHiScoreResultSender> resultSender, NSInteger pooky))requestHandler;
 
-+ (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)registerNewHiScoreRequestReceiver:(id<TapTelegraphNewHiScoreRequestReceiver>)requestReceiver;
++ (void)registerNewHiScoreRequestHandler:(void (^)(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData * hiScoreData))requestHandler;
 
-+ (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)registerNewPBRequestReceiver:(id<TapTelegraphNewPBRequestReceiver>)requestReceiver;
++ (void)registerNewPBRequestHandler:(void (^)(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData * hiScoreData))requestHandler;
 
 @end

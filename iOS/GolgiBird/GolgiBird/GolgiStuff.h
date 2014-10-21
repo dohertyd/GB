@@ -11,7 +11,7 @@
 #import "ViewController.h"
 
 
-@interface GolgiStuff : NSObject <GolgiAPIUser>
+@interface GolgiStuff : NSObject
 {
     ViewController *viewController;
     NSString *ourId;

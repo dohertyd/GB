@@ -39,23 +39,23 @@ import com.openmindnetworks.golgi.api.GolgiAPIHandler;
 
 import java.util.ArrayList;
 
+import io.golgi.apiimpl.android.GolgiAbstractService;
 import io.golgi.example.gen.GolgiKeys;
 
 /**
  * Created by briankelly on 13/02/2014.
  */
-public class GolgiService extends io.golgi.apiimpl.android.GolgiService {
+public class GolgiService extends GolgiAbstractService {
     private static GolgiService theInstance;
 
     private static void DBG(String str){
         DBG.write("SVC", str);
     }
 
-    public void registerGolgi(String msisdn) {
-        GolgiAPI.getInstance().register(
-                GolgiKeys.DEV_KEY,
-                GolgiKeys.APP_KEY,
-                msisdn,
+    @Override
+    public void readyForRegister() {
+        String id = PlayfieldActivity.getGolgiId(this);
+        registerGolgi(
                 new GolgiAPIHandler() {
                     @Override
                     public void registerSuccess() {
@@ -66,24 +66,11 @@ public class GolgiService extends io.golgi.apiimpl.android.GolgiService {
                     public void registerFailure() {
                         DBG("Golgi registration Failure");
                     }
-                }
-        );
+                },
+                GolgiKeys.DEV_KEY,
+                GolgiKeys.APP_KEY,
+                id);
     }
 
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        DBG("onStartCommand() called");
-        super.onStartCommand(intent, flags, startId);
-        DBG("onStartCommand() complete");
-
-        String id = PlayfieldActivity.getGolgiId(this);
-        registerGolgi(id);
-        DBG("Registering with Golgi as '" + id + "'");
-
-        return START_STICKY;
-
-    }
 }
 

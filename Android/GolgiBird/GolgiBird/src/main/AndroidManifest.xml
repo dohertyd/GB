@@ -13,6 +13,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data android:value="io.golgi.example.GolgiService" android:name="GolgiServiceClassName"/>
+
         <activity
             android:name="io.golgi.example.PlayfieldActivity"
             android:label="@string/app_name"
@@ -24,10 +26,9 @@
             </intent-filter>
         </activity>
         <service android:exported="true" android:name=".GolgiService"/>
-        <service android:name=".GolgiGCMIntentService" />
         <activity android:name=".PrefsActivity" android:label="Settings"></activity>
         <receiver
-            android:name=".GolgiGCMBroadcastReceiver"
+            android:name="io.golgi.apiimpl.android.GolgiGCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

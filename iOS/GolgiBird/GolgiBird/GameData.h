@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface GameData : NSObject
-{
-    BOOL warningShown;
-    NSInteger hiScore;
-    NSString *instanceId;
-}
-
 
 + (BOOL)getWarningShown;
 + (void)setWarningShown:(BOOL)value;

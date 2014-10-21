@@ -12,179 +12,6 @@
 #import "TapTelegraphSvcWrapper.h"
 #import "GameData.h"
 
-@interface _StartGameResultReceiver: NSObject <TapTelegraphStartGameResultReceiver>
-@end
-@implementation _StartGameResultReceiver
-- (void)success
-{
-    NSLog(@"Start Game: SUCCESS");
-}
-
-- (void)failureWithGolgiException:(GolgiException *)golgiException
-{
-    NSLog(@"Start Game: FAILED '%@'", [golgiException getErrText]);
-}
-
-@end
-
-@interface _SendTapResultReceiver: NSObject <TapTelegraphSendTapResultReceiver>
-@end
-@implementation _SendTapResultReceiver
-- (void)success
-{
-    NSLog(@"Send Tap: SUCCESS");
-}
-
-- (void)failureWithGolgiException:(GolgiException *)golgiException
-{
-    NSLog(@"Send Tap: FAILED '%@'", [golgiException getErrText]);
-}
-
-@end
-
-@interface _GameOverResultReceiver: NSObject <TapTelegraphGameOverResultReceiver>
-@end
-@implementation _GameOverResultReceiver
-- (void)success
-{
-    NSLog(@"Game Over: SUCCESS");
-}
-
-- (void)failureWithGolgiException:(GolgiException *)golgiException
-{
-    NSLog(@"Game Over: FAILED '%@'", [golgiException getErrText]);
-}
-
-@end
-@interface _NewPBResultReceiver: NSObject <TapTelegraphNewPBResultReceiver>
-@end
-
-@implementation _NewPBResultReceiver
-- (void)success
-{
-    NSLog(@"New PB: SUCCESS");
-}
-
-- (void)failureWithGolgiException:(GolgiException *)golgiException
-{
-    NSLog(@"New PB: FAILED '%@'", [golgiException getErrText]);
-}
-
-@end
-
-@interface _StreamGameResultReceiver: NSObject <TapTelegraphStreamGameResultReceiver>
-@end
-@implementation _StreamGameResultReceiver
-- (void)success
-{
-    NSLog(@"Stream Game: SUCCESS");
-}
-
-- (void)failureWithGolgiException:(GolgiException *)golgiException
-{
-    NSLog(@"Stream Game: FAILED '%@'", [golgiException getErrText]);
-}
-
-@end
-
-@interface _GetHiScoreResultReceiver: NSObject <TapTelegraphGetHiScoreResultReceiver>
-{
-    Controller *controller;
-}
-- (_GetHiScoreResultReceiver *)initWithController:(Controller *)controller;
-@end
-@implementation _GetHiScoreResultReceiver
-- (void)successWithResult:(HiScoreData *)result
-{
-    NSLog(@"Hi Score is %ld held by '%@'", (long)[result getScore], [result getName]);
-    controller.viewController.netHiScoreLabel.text = [NSString stringWithFormat:@"%@: %ld", [result getName], (long)[result getScore]];
-}
-
-- (void)failureWithGolgiException:(GolgiException *)golgiException
-{
-    NSLog(@"Get Hi Score: FAILED '%@'", [golgiException getErrText]);
-}
-
-- (_GetHiScoreResultReceiver *)initWithController:(Controller *)_controller
-{
-    self = [self init];
-    
-    controller = _controller;
-    
-    return self;
-}
-
-@end
-
-@interface CombinedRequestReceiver: NSObject <TapTelegraphSendTapRequestReceiver,TapTelegraphStartGameRequestReceiver,TapTelegraphGameOverRequestReceiver,TapTelegraphNewHiScoreRequestReceiver,TapTelegraphNewPBRequestReceiver>
-{
-    Controller *controller;
-}
-- (CombinedRequestReceiver *)initWithController:(Controller *)controller;
-@end
-@implementation CombinedRequestReceiver
-
-- (void)startGameWithResultSender:(id<TapTelegraphStartGameResultSender>)resultSender andPlayerInfo:(PlayerInfo *)playerInfo
-{
-    NSLog(@"Start game arrived for game played by: '%@' with ID: '%@'", [playerInfo getName], [playerInfo getGameId]);
-    
-    
-    [controller streamGameArrived:playerInfo];
-    
-    
-    [resultSender success];
-}
-
-- (void)sendTapWithResultSender:(id<TapTelegraphSendTapResultSender>)resultSender andTapData:(TapData *)tapData
-{
-    NSLog(@"Send Tap arrived for game: '%@'", [tapData getGameId]);
-    [controller sendTapArrived:tapData];
-    [resultSender success];
-}
-
-- (void)gameOverWithResultSender:(id<TapTelegraphGameOverResultSender>)resultSender andGameOverData:(GameOverData *)gameOverData
-{
-    NSLog(@"Game Over arrived for game: '%@'", [GameData getInstanceId]);
-    
-    [controller gameOverArrived:gameOverData];
-    
-    [resultSender success];
-}
-
-- (void)newHiScoreWithResultSender:(id<TapTelegraphNewHiScoreResultSender>)resultSender andHiScoreData:(HiScoreData *)hiScoreData
-{
-    NSLog(@"Zoikes, a new hi score by '%@' %ld", [hiScoreData getName], (long)[hiScoreData getScore]);
-    
-    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = [NSString stringWithFormat:@"'%@' new Hi-Score: %ld",[hiScoreData getName], (long)[hiScoreData getScore]];
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    
-    [resultSender success];
-}
-
-- (void)newPBWithResultSender:(id<TapTelegraphNewPBResultSender>)resultSender andHiScoreData:(HiScoreData *)hiScoreData
-{
-    NSLog(@"Zoikes, a new pb by '%@' %ld", [hiScoreData getName], (long)[hiScoreData getScore]);
-    
-    UILocalNotification* localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = [NSString stringWithFormat:@"'%@' new Personal Best: %ld",[hiScoreData getName], (long)[hiScoreData getScore]];
-    [[UIApplication sharedApplication] cancelAllLocalNotifications];
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    
-    [resultSender success];
-}
-
-
-- (CombinedRequestReceiver *)initWithController:(Controller *)_controller
-{
-    self = [self init];
-    controller = _controller;
-    return self;
-}
-
-@end
-
 @implementation Controller
 @synthesize refreshTimer;
 @synthesize viewController;
@@ -424,10 +251,19 @@
     NSLog(@"Player Name: %@", [self getPlayerName]);
     
     if(dataEnabled){
-        [TapTelegraphSvc sendStartGameUsingResultReceiver:[[_StartGameResultReceiver alloc] init]
-                                     withTransportOptions:stdGto
-                                           andDestination:@"SERVER"
-                                           withPlayerInfo:playerInfo];
+        [TapTelegraphSvc sendStartGameUsingResultHandler:^(TapTelegraphStartGameExceptionBundle *exBundle)
+                                                        {
+                                                            if(exBundle == nil){
+                                                                NSLog(@"Start Game: SUCCESS");
+                                                            }
+                                                            else{
+                                                                NSLog(@"Start Game: FAILED '%@'", [exBundle.golgiException getErrText]);
+                                                            }
+                                                        }
+                                    withTransportOptions:stdGto
+                                          andDestination:@"SERVER"
+                                          withPlayerInfo:playerInfo];
+
     }
 }
 
@@ -443,10 +279,18 @@
     [tapData setScore:score];
     
     if(dataEnabled){
-        [TapTelegraphSvc sendSendTapUsingResultReceiver:[[_SendTapResultReceiver alloc] init]
-                                   withTransportOptions:stdGto
-                                         andDestination:@"SERVER"
-                                            withTapData:tapData];
+        [TapTelegraphSvc sendSendTapUsingResultHandler:^(TapTelegraphSendTapExceptionBundle *exBundle)
+                                                      {
+                                                          if(exBundle == nil){
+                                                              NSLog(@"Send Tap: SUCCESS");
+                                                          }
+                                                          else{
+                                                              NSLog(@"Send Tap: FAILED '%@'", [exBundle.golgiException getErrText]);
+                                                          }
+                                                      }
+                                  withTransportOptions:stdGto
+                                        andDestination:@"SERVER"
+                                           withTapData:tapData];
     }
 
 }
@@ -461,13 +305,19 @@
     [god setScore:score];
     
     if(dataEnabled){
-        [TapTelegraphSvc sendGameOverUsingResultReceiver:[[_GameOverResultReceiver alloc] init]
-                                    withTransportOptions:stdGto
-                                          andDestination:@"SERVER"
-                                        withGameOverData:god];
+        [TapTelegraphSvc sendGameOverUsingResultHandler:^(TapTelegraphGameOverExceptionBundle *exBundle)
+                                                        {
+                                                            if(exBundle == nil){
+                                                                NSLog(@"Game Over: SUCCESS");
+                                                            }
+                                                            else{
+                                                                NSLog(@"Game Over: FAILED '%@'", [exBundle.golgiException getErrText]);
+                                                            }
+                                                        }
+                                   withTransportOptions:stdGto
+                                         andDestination:@"SERVER"
+                                       withGameOverData:god];
     }
-    
-    
 }
 
 - (void)sendNewPB
@@ -478,10 +328,18 @@
     [hsd setScore:personalBest];
     
     if(dataEnabled){
-        [TapTelegraphSvc sendNewPBUsingResultReceiver:[[_NewPBResultReceiver alloc] init]
-                                 withTransportOptions:stdGto
-                                       andDestination:@"SERVER"
-                                      withHiScoreData:hsd];
+        [TapTelegraphSvc sendNewPBUsingResultHandler:^(TapTelegraphNewPBExceptionBundle *exBundle)
+                                                    {
+                                                        if(exBundle == nil){
+                                                            NSLog(@"New PB: SUCCESS");
+                                                        }
+                                                        else{
+                                                            NSLog(@"New PB: FAILED '%@'", [exBundle.golgiException getErrText]);
+                                                        }
+                                                    }
+                                withTransportOptions:stdGto
+                                      andDestination:@"SERVER"
+                                     withHiScoreData:hsd];
     }
     
     
@@ -489,11 +347,18 @@
 
 - (void)sendStreamGame
 {
-    
-    [TapTelegraphSvc sendStreamGameUsingResultReceiver:[[_StreamGameResultReceiver alloc] init]
-                                  withTransportOptions:stdGto
-                                        andDestination:@"SERVER"
-                                           withGolgiId:[GameData getInstanceId]];
+    [TapTelegraphSvc sendStreamGameUsingResultHandler:^(TapTelegraphStreamGameExceptionBundle *exBundle)
+                                                     {
+                                                         if(exBundle == nil){
+                                                             NSLog(@"Stream Game: SUCCESS");
+                                                         }
+                                                         else{
+                                                             NSLog(@"Stream Game: FAILED '%@'", [exBundle.golgiException getErrText]);
+                                                         }
+                                                     }
+                                 withTransportOptions:stdGto
+                                       andDestination:@"SERVER"
+                                          withGolgiId:[GameData getInstanceId]];
 }
 
 
@@ -535,6 +400,23 @@
     
 }
 
+- (void)getHiScore
+{
+    [TapTelegraphSvc sendGetHiScoreUsingResultHandler:^(HiScoreData *hsd, TapTelegraphGetHiScoreExceptionBundle *exBundle)
+                                                     {
+                                                         if(exBundle == nil){
+                                                             NSLog(@"Hi Score is %ld held by '%@'", (long)[hsd getScore], [hsd getName]);
+                                                             viewController.netHiScoreLabel.text = [NSString stringWithFormat:@"%@: %ld", [hsd getName], (long)[hsd getScore]];
+                                                         }
+                                                         else{
+                                                             NSLog(@"Get Hi Score: FAILED '%@'", [exBundle.golgiException getErrText]);
+                                                         }
+                                                     }
+                                 withTransportOptions:stdGto
+                                       andDestination:@"SERVER"
+                                            withPooky:1];
+}
+
 - (void)showStateStuff
 {
     BOOL hiScoreHidden = TRUE;
@@ -555,10 +437,7 @@
             watchHidden = FALSE;
             netHiScoreHidden = FALSE;
             NSLog(@"Sending getHiScore");
-            [TapTelegraphSvc sendGetHiScoreUsingResultReceiver:[[_GetHiScoreResultReceiver alloc] initWithController:self]
-                                          withTransportOptions:stdGto
-                                                andDestination:@"SERVER"
-                                                     withPooky:1];
+            [self getHiScore];
             break;
         case STARTING:
             hiScoreHidden = FALSE;
@@ -643,6 +522,64 @@
     }
 }
 
+- (void)addStartGameHandler
+{
+    [TapTelegraphSvc registerStartGameRequestHandler:^(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo *playerInfo) {
+        NSLog(@"Start game arrived for game played by: '%@' with ID: '%@'", [playerInfo getName], [playerInfo getGameId]);
+        
+        [self streamGameArrived:playerInfo];
+        [resultSender success];
+    }];
+}
+
+- (void)addSendTapHandler
+{
+    [TapTelegraphSvc registerSendTapRequestHandler:^(id<TapTelegraphSendTapResultSender> resultSender, TapData *tapData) {
+        NSLog(@"Send Tap arrived for game: '%@'", [tapData getGameId]);
+        [self sendTapArrived:tapData];
+        [resultSender success];
+    }];
+}
+
+- (void)addGameOverHandler
+{
+    [TapTelegraphSvc registerGameOverRequestHandler:^(id<TapTelegraphGameOverResultSender> resultSender, GameOverData *god) {
+        NSLog(@"Game Over arrived for game: '%@'", [GameData getInstanceId]);
+        [self gameOverArrived:god];
+        [resultSender success];
+    }];
+    
+}
+
+-(void)addNewHiScoreHandler
+{
+    [TapTelegraphSvc registerNewHiScoreRequestHandler:^(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData *hiScoreData) {
+        NSLog(@"Zoikes, a new hi score by '%@' %ld", [hiScoreData getName], (long)[hiScoreData getScore]);
+        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = [NSString stringWithFormat:@"'%@' new Hi-Score: %ld",[hiScoreData getName], (long)[hiScoreData getScore]];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        [resultSender success];
+    }];
+    
+}
+
+- (void)addNewPBHandler
+{
+    [TapTelegraphSvc registerNewPBRequestHandler:^(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData *hiScoreData) {
+        NSLog(@"Zoikes, a new pb by '%@' %ld", [hiScoreData getName], (long)[hiScoreData getScore]);
+        
+        UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+        localNotification.alertBody = [NSString stringWithFormat:@"'%@' new Personal Best: %ld",[hiScoreData getName], (long)[hiScoreData getScore]];
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
+        [resultSender success];
+    }];
+    
+}
+
 
 - (Controller *)initWithViewController:(ViewController *)_viewController
 {
@@ -652,12 +589,11 @@
     
     viewController.netHiScoreLabel.text = @"";
     
-    CombinedRequestReceiver *crr = [[CombinedRequestReceiver alloc] initWithController:self];
-    [TapTelegraphSvc registerStartGameRequestReceiver:crr];
-    [TapTelegraphSvc registerSendTapRequestReceiver:crr];
-    [TapTelegraphSvc registerGameOverRequestReceiver:crr];
-    [TapTelegraphSvc registerNewHiScoreRequestReceiver:crr];
-    [TapTelegraphSvc registerNewPBRequestReceiver:crr];
+    [self addStartGameHandler];
+    [self addSendTapHandler];
+    [self addGameOverHandler];
+    [self addNewHiScoreHandler];
+    [self addNewPBHandler];
     
     stdGto = [[GolgiTransportOptions alloc] init];
     [stdGto setValidityPeriodInSeconds:60];

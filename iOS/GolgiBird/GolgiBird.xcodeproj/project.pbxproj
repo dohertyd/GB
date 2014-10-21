@@ -102,7 +102,6 @@
 		96C1B8BD18B5D90100172130 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		96C1B8BF18B5E16100172130 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
 		96C1B8C018B5E16100172130 /* GameData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameData.m; sourceTree = "<group>"; };
-		D39A4F7B192CCB0300240A40 /* golgi.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = golgi.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +164,6 @@
 				9683966518B252A500F5E1F4 /* Imagery */,
 				96C1B8B918B51B1100172130 /* TapTelegraphSvcWrapper.h */,
 				96C1B8BA18B51B1100172130 /* TapTelegraphSvcWrapper.m */,
-				D39A4F7B192CCB0300240A40 /* golgi.sh */,
 				9683963618B24C6E00F5E1F4 /* AppDelegate.h */,
 				9683963718B24C6E00F5E1F4 /* AppDelegate.m */,
 				9683963918B24C6E00F5E1F4 /* Main_iPhone.storyboard */,
@@ -366,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f \"$PROJECT_DIR/../../TapTelegraph.thrift\" \"$PROJECT_DIR/$PROJECT_NAME\"\necho '#define GOLGIBIRD_DEV_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.DevKey`'\"' >\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\necho '#define GOLGIBIRD_APP_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.AppKey`'\"' >>\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\n. \"$PROJECT_DIR/$PROJECT_NAME/golgi.sh\"\nrm -f TapTelegraph.thrift\n";
+			shellScript = "#\n# GOLGI_WORK_DIR: Where the golgi_gen script will copied to run\n# GOLGI_PKG_DIR: The Golgi Package install directory\n# GOLGI_LIB_DIR: Where the Golgi runtime libraries whould be put\n#\n\nGOLGI_WORK_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_PKG_DIR=\"$HOME/Golgi-Pkg/LATEST\"\nGOLGI_HDR_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_LIB_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Copy Thrift file(s) into place (if necessary)\n#\n\ncp -f \"$PROJECT_DIR/../../TapTelegraph.thrift\" \"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Create the GOLGI_KEYS.h file containing\n# the Developer key and the application key\n#\n\necho '#define GOLGIBIRD_DEV_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.DevKey`'\"' >\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\necho '#define GOLGIBIRD_APP_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.AppKey`'\"' >>\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\n\n\n. \"$GOLGI_PKG_DIR/iOS/golgi_gen.sh\"\n\n#\n# Remove the thrift file because the canonical source is elsewhere\n#\n\nrm -f \"$GOLGI_WORK_DIR/TapTelegraph.thrift\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
