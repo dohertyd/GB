@@ -70,12 +70,47 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    BOOL launchInBg = false;
+    
     // Override point for customization after application launch.
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    if(launchOptions != nil) {
+        // Launched from push notification
+        NSDictionary *d = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if(d != nil){
+            //
+            // Ok, launched into the background, setup Golgi
+            //
+            
+            /*
+             UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+             localNotification.alertBody = @"Launching into BG";
+             [[UIApplication sharedApplication] cancelAllLocalNotifications];
+             [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+             */
+            
+            [Golgi enteringBackground];
+            [Golgi useEphemeralConnection];
+            launchInBg = true;
+        }
+    }
     
-    if(![GameData getWarningShown]){
+    
+    //
+    // Lifted from StackOverflow, how to register for push
+    // in a backwards compatible way
+    //
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else{
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+    }
+
+    
+    if(!launchInBg && ![GameData getWarningShown]){
         dataSharingAlert = [[UIAlertView alloc] initWithTitle:@"GolgiBird Data Sharing"
                                                       message:@"GolgiBird sends your Screen Name (default is 'Anonymous'), High-Score and Gameplay to our servers for sharing with other players.\n\nThis can be enabled/disabled in the\nSettings App"
                                                      delegate:self
