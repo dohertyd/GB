@@ -24,6 +24,7 @@ static GameData *instance = nil;
 
 + (void)setHiScore:(NSInteger)_hiScore
 {
+    [GolgiStore deleteIntegerForKey:HI_SCORE_KEY];
     [GolgiStore putInteger:_hiScore forKey:HI_SCORE_KEY];
 }
 
@@ -34,6 +35,7 @@ static GameData *instance = nil;
 
 + (void)setWarningShown:(BOOL)_warningShown
 {
+    [GolgiStore deleteIntegerForKey:WARNING_SHOWN_KEY];
     [GolgiStore putInteger:(_warningShown ? 1 : 0) forKey:WARNING_SHOWN_KEY];
 }
 
@@ -44,6 +46,7 @@ static GameData *instance = nil;
 
 + (void)setInstanceId:(NSString *)_instanceId
 {
+    [GolgiStore deleteStringForKey:INSTANCE_ID_KEY];
     [GolgiStore putString:_instanceId forKey:INSTANCE_ID_KEY];
 }
 
