@@ -28,13 +28,14 @@
 # THE POSSIBILITY OF SUCH DAMAGES.
 #
 
-PKG_DIR		=	$(HOME)/Golgi-Pkg/LATEST/
+#PKG_DIR		=	$(HOME)/Golgi-Pkg/LATEST/
+PKG_DIR		=	$(HOME)/Golgi-Pkg/v2-08-03/
 JDK_BIN		=	/usr/bin
 JRE_BIN		=	/usr/bin
 
 
 LOG4J_JAR	=	apache-log4j-1.2.17/log4j-1.2.17.jar
-HTTP_CLIENT_JAR	=	httpcomponents-client-4.3.3/lib/httpclient-4.3.3.jar
+HTTP_CLIENT_JAR	=	httpcomponents-client-4.3.6/lib/httpclient-4.3.6.jar
 JAVAC		=	$(JDK_BIN)/javac
 JAVA		=	$(JRE_BIN)/java
 JAR		=	$(JDK_BIN)/jar
@@ -70,5 +71,5 @@ $(LOG4J_JAR):
 
 $(HTTP_CLIENT_JAR):
 	@echo "***** Downloading httpclient *****"
-	@curl -s http://ftp.heanet.ie/mirrors/www.apache.org/dist//httpcomponents/httpclient/binary/httpcomponents-client-4.3.3-bin.tar.gz | tar -xzf - $(HTTP_CLIENT_JAR)
+	@curl -s http://ftp.heanet.ie/mirrors/www.apache.org/dist//httpcomponents/httpclient/binary/httpcomponents-client-4.3.6-bin.tar.gz | tar -xzf - $(HTTP_CLIENT_JAR)
 
