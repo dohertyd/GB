@@ -5,76 +5,95 @@
 
 @implementation PlayerInfo
 
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"PlayerInfo"
+
 @synthesize golgiIdIsSet;
 - (NSString *)getGolgiId
 {
     return golgiId;
 }
+
 - (void)setGolgiId:(NSString *)_golgiId
 {
     golgiId = _golgiId;
     golgiIdIsSet = (_golgiId != nil) ? YES : NO;
 }
+
 @synthesize nameIsSet;
 - (NSString *)getName
 {
     return name;
 }
+
 - (void)setName:(NSString *)_name
 {
     name = _name;
     nameIsSet = (_name != nil) ? YES : NO;
 }
+
 @synthesize hiScoreIsSet;
 - (NSInteger)getHiScore
 {
     return hiScore;
 }
+
 - (void)setHiScore:(NSInteger )_hiScore
 {
     hiScore = _hiScore;
     hiScoreIsSet = YES;
 }
+
 @synthesize gameIdIsSet;
 - (NSString *)getGameId
 {
     return gameId;
 }
+
 - (void)setGameId:(NSString *)_gameId
 {
     gameId = _gameId;
     gameIdIsSet = (_gameId != nil) ? YES : NO;
 }
+
 @synthesize gameSeedIsSet;
 - (NSInteger)getGameSeed
 {
     return gameSeed;
 }
+
 - (void)setGameSeed:(NSInteger )_gameSeed
 {
     gameSeed = _gameSeed;
     gameSeedIsSet = YES;
 }
+
 @synthesize appVerIsSet;
 - (NSInteger)getAppVer
 {
     return appVer;
 }
+
 - (void)setAppVer:(NSInteger )_appVer
 {
     appVer = _appVer;
     appVerIsSet = YES;
 }
+
 @synthesize osIsSet;
 - (NSString *)getOs
 {
     return os;
 }
+
 - (void)setOs:(NSString *)_os
 {
     os = _os;
     osIsSet = (_os != nil) ? YES : NO;
 }
+
 
 + (PlayerInfo *)deserialiseFromString: (NSString *)string
 {
@@ -89,7 +108,7 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"1:"]) != nil){
-            inst.golgiId = str;
+            [inst setGolgiId:str];
         }
         else{
             corrupt = YES;
@@ -99,7 +118,7 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"2:"]) != nil){
-            inst.name = str;
+            [inst setName:str];
         }
         else{
             corrupt = YES;
@@ -119,7 +138,7 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"4:"]) != nil){
-            inst.gameId = str;
+            [inst setGameId:str];
         }
         else{
             corrupt = YES;
@@ -146,11 +165,182 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"7:"]) != nil){
-            inst.os = str;
+            [inst setOs:str];
         }
     }
 
     return (corrupt) ? nil : inst;
+}
+
++ (PlayerInfo *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [PlayerInfo fromJSONString:jsonString error:&_localErr];
+}
+
++ (PlayerInfo *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [PlayerInfo fromJSONObject:gjo error:err];
+    }
+}
+
++ (PlayerInfo *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [PlayerInfo fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (PlayerInfo *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    PlayerInfo *inst = [[PlayerInfo alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"golgiId" error:_err]) != nil){
+            [inst setGolgiId:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'golgiId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"name" error:_err]) != nil){
+            [inst setName:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'name' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'name' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"hiScore" error:_err]) != nil){
+            inst.hiScore = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'hiScore' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'hiScore' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"gameId" error:_err]) != nil){
+            [inst setGameId:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'gameId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'gameId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"gameSeed" error:_err]) != nil){
+            inst.gameSeed = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'gameSeed' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'gameSeed' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"appVer" error:_err]) != nil){
+            inst.appVer = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'appVer' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"os" error:_err]) != nil){
+            [inst setOs:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'os' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(golgiIdIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiId"], [CSL encodeJSString:golgiId]];
+        _comma = @",";
+    }
+    if(nameIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"name"], [CSL encodeJSString:name]];
+        _comma = @",";
+    }
+    if(hiScoreIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"hiScore"], (long)hiScore];
+        _comma = @",";
+    }
+    if(gameIdIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"gameId"], [CSL encodeJSString:gameId]];
+        _comma = @",";
+    }
+    if(gameSeedIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"gameSeed"], (long)gameSeed];
+        _comma = @",";
+    }
+    if(appVerIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"appVer"], (long)appVer];
+        _comma = @",";
+    }
+    if(osIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"os"], [CSL encodeJSString:os]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
 }
 
 - (NSString *)serialise
@@ -213,66 +403,83 @@
 @end
 @implementation TapData
 
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapData"
+
 @synthesize gameIdIsSet;
 - (NSString *)getGameId
 {
     return gameId;
 }
+
 - (void)setGameId:(NSString *)_gameId
 {
     gameId = _gameId;
     gameIdIsSet = (_gameId != nil) ? YES : NO;
 }
+
 @synthesize screenOffsetIsSet;
 - (NSInteger)getScreenOffset
 {
     return screenOffset;
 }
+
 - (void)setScreenOffset:(NSInteger )_screenOffset
 {
     screenOffset = _screenOffset;
     screenOffsetIsSet = YES;
 }
+
 @synthesize playerYIsSet;
 - (NSInteger)getPlayerY
 {
     return playerY;
 }
+
 - (void)setPlayerY:(NSInteger )_playerY
 {
     playerY = _playerY;
     playerYIsSet = YES;
 }
+
 @synthesize deltaYIsSet;
 - (NSInteger)getDeltaY
 {
     return deltaY;
 }
+
 - (void)setDeltaY:(NSInteger )_deltaY
 {
     deltaY = _deltaY;
     deltaYIsSet = YES;
 }
+
 @synthesize indexIsSet;
 - (NSInteger)getIndex
 {
     return index;
 }
+
 - (void)setIndex:(NSInteger )_index
 {
     index = _index;
     indexIsSet = YES;
 }
+
 @synthesize scoreIsSet;
 - (NSInteger)getScore
 {
     return score;
 }
+
 - (void)setScore:(NSInteger )_score
 {
     score = _score;
     scoreIsSet = YES;
 }
+
 
 + (TapData *)deserialiseFromString: (NSString *)string
 {
@@ -287,7 +494,7 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"1:"]) != nil){
-            inst.gameId = str;
+            [inst setGameId:str];
         }
         else{
             corrupt = YES;
@@ -347,6 +554,167 @@
     return (corrupt) ? nil : inst;
 }
 
++ (TapData *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapData fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapData *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapData fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapData *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapData fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapData *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapData *inst = [[TapData alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"gameId" error:_err]) != nil){
+            [inst setGameId:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'gameId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'gameId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"screenOffset" error:_err]) != nil){
+            inst.screenOffset = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'screenOffset' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'screenOffset' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"playerY" error:_err]) != nil){
+            inst.playerY = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'playerY' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'playerY' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"deltaY" error:_err]) != nil){
+            inst.deltaY = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'deltaY' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'deltaY' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"index" error:_err]) != nil){
+            inst.index = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'index' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'index' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"score" error:_err]) != nil){
+            inst.score = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'score' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'score' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(gameIdIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"gameId"], [CSL encodeJSString:gameId]];
+        _comma = @",";
+    }
+    if(screenOffsetIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"screenOffset"], (long)screenOffset];
+        _comma = @",";
+    }
+    if(playerYIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"playerY"], (long)playerY];
+        _comma = @",";
+    }
+    if(deltaYIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"deltaY"], (long)deltaY];
+        _comma = @",";
+    }
+    if(indexIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"index"], (long)index];
+        _comma = @",";
+    }
+    if(scoreIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"score"], (long)score];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
@@ -402,46 +770,59 @@
 @end
 @implementation GameOverData
 
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"GameOverData"
+
 @synthesize gameIdIsSet;
 - (NSString *)getGameId
 {
     return gameId;
 }
+
 - (void)setGameId:(NSString *)_gameId
 {
     gameId = _gameId;
     gameIdIsSet = (_gameId != nil) ? YES : NO;
 }
+
 @synthesize screenOffsetIsSet;
 - (NSInteger)getScreenOffset
 {
     return screenOffset;
 }
+
 - (void)setScreenOffset:(NSInteger )_screenOffset
 {
     screenOffset = _screenOffset;
     screenOffsetIsSet = YES;
 }
+
 @synthesize playerYIsSet;
 - (NSInteger)getPlayerY
 {
     return playerY;
 }
+
 - (void)setPlayerY:(NSInteger )_playerY
 {
     playerY = _playerY;
     playerYIsSet = YES;
 }
+
 @synthesize scoreIsSet;
 - (NSInteger)getScore
 {
     return score;
 }
+
 - (void)setScore:(NSInteger )_score
 {
     score = _score;
     scoreIsSet = YES;
 }
+
 
 + (GameOverData *)deserialiseFromString: (NSString *)string
 {
@@ -456,7 +837,7 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"1:"]) != nil){
-            inst.gameId = str;
+            [inst setGameId:str];
         }
         else{
             corrupt = YES;
@@ -494,6 +875,131 @@
     }
 
     return (corrupt) ? nil : inst;
+}
+
++ (GameOverData *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [GameOverData fromJSONString:jsonString error:&_localErr];
+}
+
++ (GameOverData *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [GameOverData fromJSONObject:gjo error:err];
+    }
+}
+
++ (GameOverData *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [GameOverData fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (GameOverData *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    GameOverData *inst = [[GameOverData alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"gameId" error:_err]) != nil){
+            [inst setGameId:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'gameId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'gameId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"screenOffset" error:_err]) != nil){
+            inst.screenOffset = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'screenOffset' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'screenOffset' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"playerY" error:_err]) != nil){
+            inst.playerY = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'playerY' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'playerY' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"score" error:_err]) != nil){
+            inst.score = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'score' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'score' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(gameIdIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"gameId"], [CSL encodeJSString:gameId]];
+        _comma = @",";
+    }
+    if(screenOffsetIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"screenOffset"], (long)screenOffset];
+        _comma = @",";
+    }
+    if(playerYIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"playerY"], (long)playerY];
+        _comma = @",";
+    }
+    if(scoreIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"score"], (long)score];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
 }
 
 - (NSString *)serialise
@@ -543,26 +1049,35 @@
 @end
 @implementation HiScoreData
 
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"HiScoreData"
+
 @synthesize nameIsSet;
 - (NSString *)getName
 {
     return name;
 }
+
 - (void)setName:(NSString *)_name
 {
     name = _name;
     nameIsSet = (_name != nil) ? YES : NO;
 }
+
 @synthesize scoreIsSet;
 - (NSInteger)getScore
 {
     return score;
 }
+
 - (void)setScore:(NSInteger )_score
 {
     score = _score;
     scoreIsSet = YES;
 }
+
 
 + (HiScoreData *)deserialiseFromString: (NSString *)string
 {
@@ -577,7 +1092,7 @@
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"1:"]) != nil){
-            inst.name = str;
+            [inst setName:str];
         }
         else{
             corrupt = YES;
@@ -595,6 +1110,95 @@
     }
 
     return (corrupt) ? nil : inst;
+}
+
++ (HiScoreData *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [HiScoreData fromJSONString:jsonString error:&_localErr];
+}
+
++ (HiScoreData *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [HiScoreData fromJSONObject:gjo error:err];
+    }
+}
+
++ (HiScoreData *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [HiScoreData fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (HiScoreData *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    HiScoreData *inst = [[HiScoreData alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"name" error:_err]) != nil){
+            [inst setName:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'name' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'name' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"score" error:_err]) != nil){
+            inst.score = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'score' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'score' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(nameIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"name"], [CSL encodeJSString:name]];
+        _comma = @",";
+    }
+    if(scoreIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"score"], (long)score];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
 }
 
 - (NSString *)serialise
@@ -635,24 +1239,35 @@
 
 @end
 @implementation TapTelegraph_startGame_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_startGame_reqArg"
+
 @synthesize playerInfoIsSet;
 - (PlayerInfo *)getPlayerInfo
 {
     return playerInfo;
 }
+
 - (void)setPlayerInfo:(PlayerInfo *)_playerInfo
 {
     playerInfo = _playerInfo;
     playerInfoIsSet = (_playerInfo != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_startGame_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_startGame_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_startGame_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_startGame_reqArg *inst = [[TapTelegraph_startGame_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"1"]) != nil){
@@ -665,68 +1280,170 @@
     if([inst getPlayerInfo] == nil){
         corrupt = YES;
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_startGame_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_startGame_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_startGame_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_startGame_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_startGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_startGame_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_startGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_startGame_reqArg *inst = [[TapTelegraph_startGame_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        PlayerInfo *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"playerInfo" error:_err]) != nil){
+            if((_objInst = [PlayerInfo fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'playerInfo' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'playerInfo' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.playerInfo = _objInst;
+        }
+        else if(*_err == nil && !corrupt){
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'playerInfo' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(playerInfoIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"playerInfo"], [playerInfo toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(playerInfoIsSet){
         [_str appendString:[playerInfo serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_startGame_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         playerInfo = [[PlayerInfo alloc] initWithIsSet:defIsSet];
         playerInfoIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_startGame_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_startGame_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_startGame_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_startGame_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_startGame_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_startGame_rspArg *inst = [[TapTelegraph_startGame_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -736,54 +1453,163 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_startGame_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_startGame_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_startGame_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_startGame_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_startGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_startGame_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_startGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_startGame_rspArg *inst = [[TapTelegraph_startGame_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_startGame_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_sendTap_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_sendTap_reqArg"
+
 @synthesize tapDataIsSet;
 - (TapData *)getTapData
 {
     return tapData;
 }
+
 - (void)setTapData:(TapData *)_tapData
 {
     tapData = _tapData;
     tapDataIsSet = (_tapData != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_sendTap_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_sendTap_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_sendTap_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_sendTap_reqArg *inst = [[TapTelegraph_sendTap_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"1"]) != nil){
@@ -796,68 +1622,170 @@
     if([inst getTapData] == nil){
         corrupt = YES;
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_sendTap_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_sendTap_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_sendTap_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_sendTap_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_sendTap_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_sendTap_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_sendTap_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_sendTap_reqArg *inst = [[TapTelegraph_sendTap_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        TapData *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"tapData" error:_err]) != nil){
+            if((_objInst = [TapData fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'tapData' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'tapData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.tapData = _objInst;
+        }
+        else if(*_err == nil && !corrupt){
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'tapData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(tapDataIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"tapData"], [tapData toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(tapDataIsSet){
         [_str appendString:[tapData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_sendTap_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         tapData = [[TapData alloc] initWithIsSet:defIsSet];
         tapDataIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_sendTap_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_sendTap_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_sendTap_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_sendTap_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_sendTap_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_sendTap_rspArg *inst = [[TapTelegraph_sendTap_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -867,54 +1795,163 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_sendTap_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_sendTap_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_sendTap_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_sendTap_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_sendTap_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_sendTap_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_sendTap_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_sendTap_rspArg *inst = [[TapTelegraph_sendTap_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_sendTap_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_gameOver_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_gameOver_reqArg"
+
 @synthesize gameOverDataIsSet;
 - (GameOverData *)getGameOverData
 {
     return gameOverData;
 }
+
 - (void)setGameOverData:(GameOverData *)_gameOverData
 {
     gameOverData = _gameOverData;
     gameOverDataIsSet = (_gameOverData != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_gameOver_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_gameOver_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_gameOver_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_gameOver_reqArg *inst = [[TapTelegraph_gameOver_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"1"]) != nil){
@@ -927,68 +1964,170 @@
     if([inst getGameOverData] == nil){
         corrupt = YES;
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_gameOver_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_gameOver_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_gameOver_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_gameOver_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_gameOver_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_gameOver_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_gameOver_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_gameOver_reqArg *inst = [[TapTelegraph_gameOver_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GameOverData *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"gameOverData" error:_err]) != nil){
+            if((_objInst = [GameOverData fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'gameOverData' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'gameOverData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.gameOverData = _objInst;
+        }
+        else if(*_err == nil && !corrupt){
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'gameOverData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(gameOverDataIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"gameOverData"], [gameOverData toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(gameOverDataIsSet){
         [_str appendString:[gameOverData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_gameOver_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         gameOverData = [[GameOverData alloc] initWithIsSet:defIsSet];
         gameOverDataIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_gameOver_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_gameOver_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_gameOver_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_gameOver_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_gameOver_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_gameOver_rspArg *inst = [[TapTelegraph_gameOver_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -998,125 +2137,329 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_gameOver_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_gameOver_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_gameOver_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_gameOver_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_gameOver_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_gameOver_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_gameOver_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_gameOver_rspArg *inst = [[TapTelegraph_gameOver_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_gameOver_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_streamGame_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_streamGame_reqArg"
+
 @synthesize golgiIdIsSet;
 - (NSString *)getGolgiId
 {
     return golgiId;
 }
+
 - (void)setGolgiId:(NSString *)_golgiId
 {
     golgiId = _golgiId;
     golgiIdIsSet = (_golgiId != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_streamGame_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_streamGame_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_streamGame_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_streamGame_reqArg *inst = [[TapTelegraph_streamGame_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSString *str;
         if((str = [payload getStringWithTag:@"1:"]) != nil){
-            inst.golgiId = str;
+            [inst setGolgiId:str];
         }
         else{
             corrupt = YES;
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_streamGame_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_streamGame_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_streamGame_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_streamGame_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_streamGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_streamGame_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_streamGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_streamGame_reqArg *inst = [[TapTelegraph_streamGame_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSString *str;
+        if((str = [jsonObj getStringWithKey:@"golgiId" error:_err]) != nil){
+            [inst setGolgiId:str];
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'golgiId' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(golgiIdIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiId"], [CSL encodeJSString:golgiId]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(golgiIdIsSet){
         [_str appendFormat:@"%@1: \"%@\"\n", prefix, [CSL  NTLEscapeString:golgiId]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_streamGame_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiId = @"";
         golgiIdIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_streamGame_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_streamGame_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_streamGame_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_streamGame_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_streamGame_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_streamGame_rspArg *inst = [[TapTelegraph_streamGame_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -1126,54 +2469,163 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_streamGame_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_streamGame_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_streamGame_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_streamGame_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_streamGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_streamGame_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_streamGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_streamGame_rspArg *inst = [[TapTelegraph_streamGame_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_streamGame_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_getHiScore_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_getHiScore_reqArg"
+
 @synthesize pookyIsSet;
 - (NSInteger)getPooky
 {
     return pooky;
 }
+
 - (void)setPooky:(NSInteger )_pooky
 {
     pooky = _pooky;
     pookyIsSet = YES;
 }
+
+
 + (TapTelegraph_getHiScore_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_getHiScore_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_getHiScore_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_getHiScore_reqArg *inst = [[TapTelegraph_getHiScore_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
@@ -1183,77 +2635,174 @@
             corrupt = YES;
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_getHiScore_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_getHiScore_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_getHiScore_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_getHiScore_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_getHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_getHiScore_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_getHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_getHiScore_reqArg *inst = [[TapTelegraph_getHiScore_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"pooky" error:_err]) != nil){
+            inst.pooky = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'pooky' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        else{
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory i32 'pooky' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(pookyIsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"pooky"], (long)pooky];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(pookyIsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)pooky];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_getHiScore_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         pookyIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_getHiScore_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_getHiScore_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize resultIsSet;
 - (HiScoreData *)getResult
 {
     return result;
 }
+
 - (void)setResult:(HiScoreData *)_result
 {
     result = _result;
     resultIsSet = (_result != nil) ? YES : NO;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_getHiScore_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_getHiScore_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_getHiScore_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_getHiScore_rspArg *inst = [[TapTelegraph_getHiScore_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"2"]) != nil){
@@ -1263,6 +2812,7 @@
             [inst setResult:nil];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -1272,15 +2822,128 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_getHiScore_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_getHiScore_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_getHiScore_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_getHiScore_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_getHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_getHiScore_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_getHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_getHiScore_rspArg *inst = [[TapTelegraph_getHiScore_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        HiScoreData *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"result" error:_err]) != nil){
+            if((_objInst = [HiScoreData fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'result' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'result' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.result = _objInst;
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(resultIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"result"], [result toJSON]];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
@@ -1290,40 +2953,57 @@
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_getHiScore_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         result = [[HiScoreData alloc] initWithIsSet:defIsSet];
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_newHiScore_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_newHiScore_reqArg"
+
 @synthesize hiScoreDataIsSet;
 - (HiScoreData *)getHiScoreData
 {
     return hiScoreData;
 }
+
 - (void)setHiScoreData:(HiScoreData *)_hiScoreData
 {
     hiScoreData = _hiScoreData;
     hiScoreDataIsSet = (_hiScoreData != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_newHiScore_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_newHiScore_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_newHiScore_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_newHiScore_reqArg *inst = [[TapTelegraph_newHiScore_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"1"]) != nil){
@@ -1336,68 +3016,170 @@
     if([inst getHiScoreData] == nil){
         corrupt = YES;
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_newHiScore_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newHiScore_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_newHiScore_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_newHiScore_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_newHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newHiScore_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_newHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_newHiScore_reqArg *inst = [[TapTelegraph_newHiScore_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        HiScoreData *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"hiScoreData" error:_err]) != nil){
+            if((_objInst = [HiScoreData fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'hiScoreData' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'hiScoreData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.hiScoreData = _objInst;
+        }
+        else if(*_err == nil && !corrupt){
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'hiScoreData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(hiScoreDataIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"hiScoreData"], [hiScoreData toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(hiScoreDataIsSet){
         [_str appendString:[hiScoreData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_newHiScore_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         hiScoreData = [[HiScoreData alloc] initWithIsSet:defIsSet];
         hiScoreDataIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_newHiScore_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_newHiScore_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_newHiScore_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_newHiScore_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_newHiScore_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_newHiScore_rspArg *inst = [[TapTelegraph_newHiScore_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -1407,54 +3189,163 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_newHiScore_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newHiScore_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_newHiScore_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_newHiScore_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_newHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newHiScore_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_newHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_newHiScore_rspArg *inst = [[TapTelegraph_newHiScore_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_newHiScore_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_newPB_reqArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_newPB_reqArg"
+
 @synthesize hiScoreDataIsSet;
 - (HiScoreData *)getHiScoreData
 {
     return hiScoreData;
 }
+
 - (void)setHiScoreData:(HiScoreData *)_hiScoreData
 {
     hiScoreData = _hiScoreData;
     hiScoreDataIsSet = (_hiScoreData != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_newPB_reqArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_newPB_reqArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_newPB_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_newPB_reqArg *inst = [[TapTelegraph_newPB_reqArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"1"]) != nil){
@@ -1467,68 +3358,170 @@
     if([inst getHiScoreData] == nil){
         corrupt = YES;
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_newPB_reqArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newPB_reqArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_newPB_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_newPB_reqArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_newPB_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newPB_reqArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_newPB_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_newPB_reqArg *inst = [[TapTelegraph_newPB_reqArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        HiScoreData *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"hiScoreData" error:_err]) != nil){
+            if((_objInst = [HiScoreData fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'hiScoreData' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'hiScoreData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.hiScoreData = _objInst;
+        }
+        else if(*_err == nil && !corrupt){
+            corrupt = YES;
+            *_err = [GolgiJSONError createWithErrType:-1 andErrText:[NSString stringWithFormat:@"Missing mandatory field 'hiScoreData' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(hiScoreDataIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"hiScoreData"], [hiScoreData toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(hiScoreDataIsSet){
         [_str appendString:[hiScoreData serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "1"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_newPB_reqArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         hiScoreData = [[HiScoreData alloc] initWithIsSet:defIsSet];
         hiScoreDataIsSet = defIsSet;
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraph_newPB_rspArg
+
+#ifdef GOLGI_STRUCT_NAME
+#undef GOLGI_STRUCT_NAME
+#endif
+#define GOLGI_STRUCT_NAME @"TapTelegraph_newPB_rspArg"
+
 @synthesize internalSuccess_IsSet;
 - (NSInteger)getInternalSuccess_
 {
     return internalSuccess_;
 }
+
 - (void)setInternalSuccess_:(NSInteger )_internalSuccess_
 {
     internalSuccess_ = _internalSuccess_;
     internalSuccess_IsSet = YES;
 }
+
 @synthesize golgiExceptionIsSet;
 - (GolgiException *)getGolgiException
 {
     return golgiException;
 }
+
 - (void)setGolgiException:(GolgiException *)_golgiException
 {
     golgiException = _golgiException;
     golgiExceptionIsSet = (_golgiException != nil) ? YES : NO;
 }
+
+
 + (TapTelegraph_newPB_rspArg *)deserialiseFromString: (NSString *)string
 {
     return [TapTelegraph_newPB_rspArg deserialiseFromPayload:[GolgiPayload payloadWithString:string]];
 }
+
 + (TapTelegraph_newPB_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload
 {
     TapTelegraph_newPB_rspArg *inst = [[TapTelegraph_newPB_rspArg alloc] initWithIsSet:NO];
     BOOL corrupt = NO;
+
     {
         NSNumber *num;
         if((num = [payload getIntWithTag:@"1:"]) != nil){
             inst.internalSuccess_ = [num intValue];
         }
     }
+
     {
         GolgiPayload *nestedPayload;
         if((nestedPayload = [payload getNestedWithTag:@"3"]) != nil){
@@ -1538,40 +3531,139 @@
             [inst setGolgiException:nil];
         }
     }
+
     return (corrupt) ? nil : inst;
 }
+
++ (TapTelegraph_newPB_rspArg *)fromJSONString:(NSString *)jsonString
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newPB_rspArg fromJSONString:jsonString error:&_localErr];
+}
+
++ (TapTelegraph_newPB_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err
+{
+    GolgiJSONObject *gjo = [GolgiJSONObject createFromString:jsonString error:err];
+    if(gjo == nil){
+        if(*err == nil){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:@"Malformed JSON"];
+        }
+        else if((*err).errType < 0){
+            *err = [GolgiJSONError createWithErrType:GOLGI_ERRTYPE_MALFORMED_JSON andErrText:(*err).errText];
+        }
+        return nil;
+    }
+    else{
+        return [TapTelegraph_newPB_rspArg fromJSONObject:gjo error:err];
+    }
+}
+
++ (TapTelegraph_newPB_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj
+{
+    GolgiJSONError *_localErr;
+    return [TapTelegraph_newPB_rspArg fromJSONObject:jsonObj error:&_localErr];
+}
+
++ (TapTelegraph_newPB_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObj error:(GolgiJSONError **)_err
+{
+    *_err = nil;
+    if(jsonObj == nil) return nil;
+    TapTelegraph_newPB_rspArg *inst = [[TapTelegraph_newPB_rspArg alloc] initWithIsSet:NO];
+    BOOL corrupt = NO;
+
+    if(!corrupt){
+        NSNumber *num;
+        if((num = [jsonObj getIntegerWithKey:@"internalSuccess_" error:_err]) != nil){
+            inst.internalSuccess_ = num.intValue;
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'internalSuccess_' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+    }
+    if(!corrupt){
+        GolgiJSONObject *obj = nil;
+        GolgiException *_objInst = nil;
+        if((obj = [jsonObj getObjectWithKey:@"golgiException" error:_err]) != nil){
+            if((_objInst = [GolgiException fromJSONObject:obj error:_err]) == nil){
+                corrupt = YES;
+                [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+            }
+        }
+        else if(*_err != nil){
+            corrupt = YES;
+            [*_err appendErrText:[NSString stringWithFormat:@"\nWhile decoding 'golgiException' in '%@'", GOLGI_STRUCT_NAME]];
+        }
+        if(_objInst != nil){
+            inst.golgiException = _objInst;
+        }
+    }
+
+    return (corrupt) ? nil : inst;
+}
+
+- (NSString *)toJSON
+{
+    NSMutableString *_str = [[NSMutableString alloc] init];
+    NSString *_comma = @"";
+
+    [_str appendString:@"{"];
+
+    if(internalSuccess_IsSet){
+        [_str appendFormat:@"%@%@%ld", _comma, [CSL genJSONTag:@"internalSuccess_"], (long)internalSuccess_];
+        _comma = @",";
+    }
+    if(golgiExceptionIsSet){
+        [_str appendFormat:@"%@%@%@", _comma, [CSL genJSONTag:@"golgiException"], [golgiException toJSON]];
+        _comma = @",";
+    }
+
+    [_str appendString:@"}"];
+
+    return [NSString stringWithString:_str];
+}
+
 - (NSString *)serialise
 {
     return [self serialiseWithPrefix:@""];
 }
+
 - (NSString *)serialiseWithPrefix:(NSString *)prefix
 {
     NSMutableString *_str = [[NSMutableString alloc] init];
+
     if(internalSuccess_IsSet){
         [_str appendFormat:@"%@1: %ld\n", prefix, (long)internalSuccess_];
     }
     if(golgiExceptionIsSet){
         [_str appendString:[golgiException serialiseWithPrefix:[NSString stringWithFormat:@"%@%s.", prefix, "3"]]];
     }
+
     return [NSString stringWithString:_str];
 }
+
 - (TapTelegraph_newPB_rspArg *)init
 {
     return [self initWithIsSet:YES];
 }
+
 - (id)initWithIsSet:(BOOL)defIsSet
 {
     if((self = [super init]) != nil){
         golgiException = [[GolgiException alloc] initWithIsSet:defIsSet];
     }
+
     return self;
+
 }
+
 @end
 @implementation TapTelegraphStartGameExceptionBundle
 @synthesize golgiException;
 - (TapTelegraphStartGameExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }
@@ -1739,6 +3831,7 @@
 - (TapTelegraphSendTapExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }
@@ -1906,6 +3999,7 @@
 - (TapTelegraphGameOverExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }
@@ -2073,6 +4167,7 @@
 - (TapTelegraphStreamGameExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }
@@ -2240,6 +4335,7 @@
 - (TapTelegraphGetHiScoreExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }
@@ -2408,6 +4504,7 @@
 - (TapTelegraphNewHiScoreExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }
@@ -2575,6 +4672,7 @@
 - (TapTelegraphNewPBExceptionBundle *) init
 {
     self = [super init];
+
     golgiException = nil;
     return self;
 }

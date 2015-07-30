@@ -3,3 +3,6 @@ GolgiBird.DevKey
 GolgiBird.Signage.gradle
 *~
 .DS_Store
+iOS/GolgiBird/GolgiBird/libGolgi.a
+iOS/GolgiBird/GolgiBird/libGolgi.h
+iOS/GolgiBird/GolgiBird/libGolgiLite.a

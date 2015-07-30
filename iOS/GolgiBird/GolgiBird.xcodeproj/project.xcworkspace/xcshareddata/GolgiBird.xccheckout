@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1E96BAB9-EB67-4EC6-98EB-C1391825923B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>GolgiBird</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>95893AF0D5E7D805FA2000269C060EE95AF0495F</key>
+		<string>https://github.com/dohertyd/GB.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOS/GolgiBird/GolgiBird.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>95893AF0D5E7D805FA2000269C060EE95AF0495F</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/dohertyd/GB.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>95893AF0D5E7D805FA2000269C060EE95AF0495F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>95893AF0D5E7D805FA2000269C060EE95AF0495F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>GB</string>
+		</dict>
+	</array>
+</dict>
+</plist>

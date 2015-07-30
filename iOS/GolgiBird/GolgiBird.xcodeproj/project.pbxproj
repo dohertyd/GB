@@ -364,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\n# GOLGI_WORK_DIR: Where the golgi_gen script will copied to run\n# GOLGI_PKG_DIR: The Golgi Package install directory\n# GOLGI_LIB_DIR: Where the Golgi runtime libraries whould be put\n#\n\nGOLGI_WORK_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_PKG_DIR=\"$HOME/Golgi-Pkg/LATEST\"\nGOLGI_HDR_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_LIB_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Copy Thrift file(s) into place (if necessary)\n#\n\ncp -f \"$PROJECT_DIR/../../TapTelegraph.thrift\" \"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Create the GOLGI_KEYS.h file containing\n# the Developer key and the application key\n#\n\necho '#define GOLGIBIRD_DEV_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.DevKey`'\"' >\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\necho '#define GOLGIBIRD_APP_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.AppKey`'\"' >>\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\n\n\n. \"$GOLGI_PKG_DIR/iOS/golgi_gen.sh\"\n\n#\n# Remove the thrift file because the canonical source is elsewhere\n#\n\nrm -f \"$GOLGI_WORK_DIR/TapTelegraph.thrift\"\n\n";
+			shellScript = "#\n# GOLGI_WORK_DIR: Where the golgi_gen script will copied to run\n# GOLGI_PKG_DIR: The Golgi Package install directory\n# GOLGI_LIB_DIR: Where the Golgi runtime libraries whould be put\n#\n\nGOLGI_WORK_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_PKG_DIR=\"$HOME/Golgi-Pkg/v2-08-03\"\nGOLGI_HDR_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_LIB_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Copy Thrift file(s) into place (if necessary)\n#\n\ncp -f \"$PROJECT_DIR/../../TapTelegraph.thrift\" \"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Create the GOLGI_KEYS.h file containing\n# the Developer key and the application key\n#\n\necho '#define GOLGIBIRD_DEV_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.DevKey`'\"' >\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\necho '#define GOLGIBIRD_APP_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.AppKey`'\"' >>\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\n\n\n. \"$GOLGI_PKG_DIR/iOS/golgi_gen.sh\"\n\n#\n# Remove the thrift file because the canonical source is elsewhere\n#\n\nrm -f \"$GOLGI_WORK_DIR/TapTelegraph.thrift\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -560,6 +560,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/GolgiBird.app/GolgiBird";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -573,6 +574,7 @@
 				);
 				INFOPLIST_FILE = "GolgiBirdTests/GolgiBirdTests-Info.plist";
 				PRODUCT_NAME = GolgiBirdTests;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -592,6 +594,7 @@
 				GCC_PREFIX_HEADER = "GolgiBird/GolgiBird-Prefix.pch";
 				INFOPLIST_FILE = "GolgiBirdTests/GolgiBirdTests-Info.plist";
 				PRODUCT_NAME = GolgiBirdTests;
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};

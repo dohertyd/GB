@@ -6,7 +6,6 @@
 #import "libGolgi.h"
 
 
-
 @interface PlayerInfo : NSObject
 {
     NSString *golgiId;
@@ -51,9 +50,13 @@
 + (PlayerInfo *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (PlayerInfo *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (PlayerInfo *)fromJSONString:(NSString *)jsonString;
++ (PlayerInfo *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (PlayerInfo *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapData : NSObject
 {
@@ -94,9 +97,13 @@
 + (TapData *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapData *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapData *)fromJSONString:(NSString *)jsonString;
++ (TapData *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapData *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface GameOverData : NSObject
 {
@@ -127,9 +134,13 @@
 + (GameOverData *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (GameOverData *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (GameOverData *)fromJSONString:(NSString *)jsonString;
++ (GameOverData *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (GameOverData *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface HiScoreData : NSObject
 {
@@ -150,9 +161,13 @@
 + (HiScoreData *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (HiScoreData *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (HiScoreData *)fromJSONString:(NSString *)jsonString;
++ (HiScoreData *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (HiScoreData *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_startGame_reqArg : NSObject
 {
@@ -168,9 +183,13 @@
 + (TapTelegraph_startGame_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_startGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_startGame_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_startGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_startGame_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_startGame_rspArg : NSObject
 {
@@ -191,9 +210,13 @@
 + (TapTelegraph_startGame_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_startGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_startGame_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_startGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_startGame_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_sendTap_reqArg : NSObject
 {
@@ -209,9 +232,13 @@
 + (TapTelegraph_sendTap_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_sendTap_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_sendTap_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_sendTap_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_sendTap_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_sendTap_rspArg : NSObject
 {
@@ -232,9 +259,13 @@
 + (TapTelegraph_sendTap_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_sendTap_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_sendTap_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_sendTap_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_sendTap_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_gameOver_reqArg : NSObject
 {
@@ -250,9 +281,13 @@
 + (TapTelegraph_gameOver_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_gameOver_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_gameOver_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_gameOver_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_gameOver_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_gameOver_rspArg : NSObject
 {
@@ -273,9 +308,13 @@
 + (TapTelegraph_gameOver_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_gameOver_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_gameOver_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_gameOver_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_gameOver_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_streamGame_reqArg : NSObject
 {
@@ -291,9 +330,13 @@
 + (TapTelegraph_streamGame_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_streamGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_streamGame_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_streamGame_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_streamGame_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_streamGame_rspArg : NSObject
 {
@@ -314,9 +357,13 @@
 + (TapTelegraph_streamGame_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_streamGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_streamGame_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_streamGame_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_streamGame_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_getHiScore_reqArg : NSObject
 {
@@ -332,9 +379,13 @@
 + (TapTelegraph_getHiScore_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_getHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_getHiScore_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_getHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_getHiScore_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_getHiScore_rspArg : NSObject
 {
@@ -360,9 +411,13 @@
 + (TapTelegraph_getHiScore_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_getHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_getHiScore_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_getHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_getHiScore_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_newHiScore_reqArg : NSObject
 {
@@ -378,9 +433,13 @@
 + (TapTelegraph_newHiScore_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_newHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_newHiScore_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_newHiScore_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_newHiScore_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_newHiScore_rspArg : NSObject
 {
@@ -401,9 +460,13 @@
 + (TapTelegraph_newHiScore_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_newHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_newHiScore_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_newHiScore_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_newHiScore_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_newPB_reqArg : NSObject
 {
@@ -419,9 +482,13 @@
 + (TapTelegraph_newPB_reqArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_newPB_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_newPB_reqArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_newPB_reqArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_newPB_reqArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
-
 
 @interface TapTelegraph_newPB_rspArg : NSObject
 {
@@ -442,6 +509,11 @@
 + (TapTelegraph_newPB_rspArg *)deserialiseFromPayload: (GolgiPayload *)payload;
 - (NSString *)serialiseWithPrefix:(NSString *)prefix;
 - (NSString *)serialise;
++ (TapTelegraph_newPB_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject;
++ (TapTelegraph_newPB_rspArg *)fromJSONString:(NSString *)jsonString;
++ (TapTelegraph_newPB_rspArg *)fromJSONObject:(GolgiJSONObject *)jsonObject error:(GolgiJSONError **)err;
++ (TapTelegraph_newPB_rspArg *)fromJSONString:(NSString *)jsonString error:(GolgiJSONError **)err;
+- (NSString *)toJSON;
 - (id)initWithIsSet:(BOOL)defIsSet;
 @end
 //
@@ -596,6 +668,7 @@
 + (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
 + (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
 + (void)sendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
++ (void)httpSendStartGameUsingResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
 + (void)sendStartGameUsingResultReceiver:(id<TapTelegraphStartGameResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphStartGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPlayerInfo:(PlayerInfo *)playerInfo;
 + (void)registerStartGameRequestReceiver:(id<TapTelegraphStartGameRequestReceiver>)requestReceiver;
 + (void)registerStartGameRequestHandler:(void (^)(id<TapTelegraphStartGameResultSender> resultSender, PlayerInfo * playerInfo))requestHandler;
@@ -604,6 +677,7 @@
 + (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
 + (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
 + (void)sendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
++ (void)httpSendSendTapUsingResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
 + (void)sendSendTapUsingResultReceiver:(id<TapTelegraphSendTapResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphSendTapExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withTapData:(TapData *)tapData;
 + (void)registerSendTapRequestReceiver:(id<TapTelegraphSendTapRequestReceiver>)requestReceiver;
 + (void)registerSendTapRequestHandler:(void (^)(id<TapTelegraphSendTapResultSender> resultSender, TapData * tapData))requestHandler;
@@ -612,6 +686,7 @@
 + (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
 + (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
 + (void)sendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
++ (void)httpSendGameOverUsingResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
 + (void)sendGameOverUsingResultReceiver:(id<TapTelegraphGameOverResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphGameOverExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGameOverData:(GameOverData *)gameOverData;
 + (void)registerGameOverRequestReceiver:(id<TapTelegraphGameOverRequestReceiver>)requestReceiver;
 + (void)registerGameOverRequestHandler:(void (^)(id<TapTelegraphGameOverResultSender> resultSender, GameOverData * gameOverData))requestHandler;
@@ -620,6 +695,7 @@
 + (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
 + (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
 + (void)sendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
++ (void)httpSendStreamGameUsingResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
 + (void)sendStreamGameUsingResultReceiver:(id<TapTelegraphStreamGameResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphStreamGameExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withGolgiId:(NSString *)golgiId;
 + (void)registerStreamGameRequestReceiver:(id<TapTelegraphStreamGameRequestReceiver>)requestReceiver;
 + (void)registerStreamGameRequestHandler:(void (^)(id<TapTelegraphStreamGameResultSender> resultSender, NSString * golgiId))requestHandler;
@@ -628,6 +704,7 @@
 + (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
 + (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
 + (void)sendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
++ (void)httpSendGetHiScoreUsingResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
 + (void)sendGetHiScoreUsingResultReceiver:(id<TapTelegraphGetHiScoreResultReceiver>)resultReceiver orResultHandler:(void (^)(HiScoreData *, TapTelegraphGetHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withPooky:(NSInteger)pooky;
 + (void)registerGetHiScoreRequestReceiver:(id<TapTelegraphGetHiScoreRequestReceiver>)requestReceiver;
 + (void)registerGetHiScoreRequestHandler:(void (^)(id<TapTelegraphGetHiScoreResultSender> resultSender, NSInteger pooky))requestHandler;
@@ -636,6 +713,7 @@
 + (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)httpSendNewHiScoreUsingResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewHiScoreUsingResultReceiver:(id<TapTelegraphNewHiScoreResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphNewHiScoreExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)registerNewHiScoreRequestReceiver:(id<TapTelegraphNewHiScoreRequestReceiver>)requestReceiver;
 + (void)registerNewHiScoreRequestHandler:(void (^)(id<TapTelegraphNewHiScoreResultSender> resultSender, HiScoreData * hiScoreData))requestHandler;
@@ -644,6 +722,7 @@
 + (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
++ (void)httpSendNewPBUsingResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)sendNewPBUsingResultReceiver:(id<TapTelegraphNewPBResultReceiver>)resultReceiver orResultHandler:(void (^)(TapTelegraphNewPBExceptionBundle *))resultHandler withTransportOptions:(GolgiTransportOptions *)options andDestination:(NSString *)_dst withHiScoreData:(HiScoreData *)hiScoreData;
 + (void)registerNewPBRequestReceiver:(id<TapTelegraphNewPBRequestReceiver>)requestReceiver;
 + (void)registerNewPBRequestHandler:(void (^)(id<TapTelegraphNewPBResultSender> resultSender, HiScoreData * hiScoreData))requestHandler;
