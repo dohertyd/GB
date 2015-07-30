@@ -1,7 +1,7 @@
 apply plugin: 'android'
 
 project.ext {
-    GOLGI_DIR = "$System.env.HOME" + '/Golgi-Pkg/LATEST'
+    GOLGI_DIR = "$System.env.HOME" + '/Golgi-Pkg/v2-08-03'
     GOLGI_THRIFT_FILE = "../../../TapTelegraph.thrift"
     GOLGI_DEV_KEY_FILE = "../../../GolgiBird.DevKey"
     GOLGI_APP_KEY_FILE = "../../../GolgiBird.AppKey"
@@ -48,12 +48,12 @@ android {
         versionCode 29000
         versionName "2.9"
     }
+
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
-            // signingConfig signingConfigs.playStoreConfig
         }
     }
 }
