@@ -61,7 +61,9 @@ import io.golgi.example.gen.TapTelegraphService.newPB;
 import io.golgi.example.gen.TapTelegraphService.*;
 
 
-public class Server extends Thread implements GolgiAPIHandler{
+//public class Server extends Thread implements GolgiAPINetworkImpl.RegHandler
+public class Server implements GolgiAPINetworkImpl.RegHandler
+{
     private String devKey = null;
     private String appKey = null;
     private String identity;
@@ -496,10 +498,12 @@ public class Server extends Thread implements GolgiAPIHandler{
         }
     }
     
-    private void looper(){
-        Class<GolgiAPI> apiRef = GolgiAPI.class;
-        GolgiAPINetworkImpl impl = new GolgiAPINetworkImpl();
-        GolgiAPI.setAPIImpl(impl);
+    private void looper()
+    {
+//Class<GolgiAPI> apiRef = GolgiAPI.class;
+//GolgiAPINetworkImpl impl = new GolgiAPINetworkImpl();
+//GolgiAPI.setAPIImpl(impl);
+
         stdGto = new GolgiTransportOptions();
         stdGto.setValidityPeriod(60);
 
@@ -509,9 +513,23 @@ public class Server extends Thread implements GolgiAPIHandler{
         dayGto = new GolgiTransportOptions();
         dayGto.setValidityPeriod(86400);
 
+        // ------- New San Andreas v3.+ setup ----------
+        GolgiAPI api = new GolgiAPI("SERVER");
+        GolgiAPINetworkImpl transport = new GolgiAPINetworkImpl(this);
+
+        api.setSBI(transport.getSBI());
+        transport.setNBI(api.getNBI());
+
+        transport.setOption("USE_TEST_SERVER", "0");
+        transport.verbose = true;
+        // ------- New San Andreas v3.+ setup ----------
+
+
         loadHiScore();
         loadUsers();
-        
+
+        TapTelegraphService.init();       
+
         streamGame.registerReceiver(inboundStreamGame);
         startGame.registerReceiver(inboundStartGame);
         sendTap.registerReceiver(inboundSendTap);
@@ -519,12 +537,12 @@ public class Server extends Thread implements GolgiAPIHandler{
         getHiScore.registerReceiver(inboundGetHiScore);
         newPB.registerReceiver(inboundNewPB);
 
+	transport.register(devKey, appKey );
 
-        // WhozinService.registerDevice.registerReceiver(registerDeviceSS);
-        GolgiAPI.register(devKey,
-                          appKey,
-                          "SERVER",
-                          this);
+//        GolgiAPI.register(devKey,
+//                          appKey,
+//                          "SERVER",
+//                          this);
         
         Timer hkTimer;
         hkTimer = new Timer();
@@ -535,9 +553,9 @@ public class Server extends Thread implements GolgiAPIHandler{
             }
         }, 1000, 1000);
         
-        while(true){
-            NTL.doSelect();
-        }
+//        while(true){
+//            NTL.doSelect();
+//        }
     }
     
     private Server(String[] args){

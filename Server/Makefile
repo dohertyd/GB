@@ -29,7 +29,8 @@
 #
 
 #PKG_DIR		=	$(HOME)/Golgi-Pkg/LATEST/
-PKG_DIR		=	$(HOME)/Golgi-Pkg/v2-08-03/
+#PKG_DIR		=	$(HOME)/Golgi-Pkg/v2-08-03/
+PKG_DIR		=	$(HOME)/Golgi-Pkg/v3-03-00/
 JDK_BIN		=	/usr/bin
 JRE_BIN		=	/usr/bin
 
