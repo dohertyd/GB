@@ -63,9 +63,10 @@ public class PlayfieldActivity extends ActionBarActivity
     boolean inFg;
     CanvasView playfield;
     Renderer renderer;
-    Controller controller;
+    static Controller controller;
     boolean broadcastGames = false;
     String screenName = "Anonymous";
+    static PlayfieldActivity theInstance;
 
     private static void DBG(String str){
         DBG.write(str);
@@ -158,20 +159,11 @@ public class PlayfieldActivity extends ActionBarActivity
                 }
             });
         }
-
-
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        DBG("onCreate()");
 
-        sharedPrefs = this.getSharedPreferences("GolgiBird", Context.MODE_PRIVATE);
-
-
-        startService(this);
-
+    protected static void regisiterRequestReceivers()
+    {
         sendTap.registerReceiver(new sendTap.RequestReceiver() {
             @Override
             public void receiveFrom(sendTap.ResultSender resultSender, TapData tapData) {
@@ -199,23 +191,83 @@ public class PlayfieldActivity extends ActionBarActivity
         });
 
         newHiScore.registerReceiver(new newHiScore.RequestReceiver() {
-            @Override
-            public void receiveFrom(newHiScore.ResultSender resultSender, HiScoreData hiScoreData) {
-                DBG("New hi score for: '" + hiScoreData.getName() + "' with: " + hiScoreData.getScore());
-                newHiScore(hiScoreData, false);
-                resultSender.success();
-            }
-        }
+                                        @Override
+                                        public void receiveFrom(newHiScore.ResultSender resultSender, HiScoreData hiScoreData) {
+                                            DBG("New hi score for: '" + hiScoreData.getName() + "' with: " + hiScoreData.getScore());
+                                            theInstance.newHiScore(hiScoreData, false);
+                                            resultSender.success();
+                                        }
+                                    }
         );
 
         newPB.registerReceiver(new newPB.RequestReceiver() {
             @Override
             public void receiveFrom(newPB.ResultSender resultSender, HiScoreData hiScoreData) {
                 DBG("New PB for: '" + hiScoreData.getName() + "' with: " + hiScoreData.getScore());
-                newHiScore(hiScoreData, true);
+                theInstance.newHiScore(hiScoreData, true);
                 resultSender.success();
             }
         });
+
+    }
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DBG("onCreate()");
+        theInstance = this;
+
+        sharedPrefs = this.getSharedPreferences("GolgiBird", Context.MODE_PRIVATE);
+
+
+        startService(this);
+
+//        sendTap.registerReceiver(new sendTap.RequestReceiver() {
+//            @Override
+//            public void receiveFrom(sendTap.ResultSender resultSender, TapData tapData) {
+//                DBG("Received a tapData for game: " + tapData.getGameId() + " " + tapData.getIndex() + "(" + tapData.getPlayerY() + ") (" + tapData.getScreenOffset() + ")");
+//                controller.remoteControl(tapData);
+//                resultSender.success();
+//            }
+//        });
+//
+//        gameOver.registerReceiver(new gameOver.RequestReceiver() {
+//            @Override
+//            public void receiveFrom(gameOver.ResultSender resultSender, GameOverData gameOverData) {
+//                DBG("Game Over Received: " + gameOverData.getGameId());
+//                controller.remoteControl(gameOverData);
+//                resultSender.success();
+//            }
+//        });
+//
+//        startGame.registerReceiver(new startGame.RequestReceiver() {
+//            @Override
+//            public void receiveFrom(startGame.ResultSender resultSender, PlayerInfo playerInfo) {
+//                controller.setRemoteName(playerInfo.getName());
+//                resultSender.success();
+//            }
+//        });
+//
+//        newHiScore.registerReceiver(new newHiScore.RequestReceiver() {
+//            @Override
+//            public void receiveFrom(newHiScore.ResultSender resultSender, HiScoreData hiScoreData) {
+//                DBG("New hi score for: '" + hiScoreData.getName() + "' with: " + hiScoreData.getScore());
+//                newHiScore(hiScoreData, false);
+//                resultSender.success();
+//            }
+//        }
+//        );
+//
+//        newPB.registerReceiver(new newPB.RequestReceiver() {
+//            @Override
+//            public void receiveFrom(newPB.ResultSender resultSender, HiScoreData hiScoreData) {
+//                DBG("New PB for: '" + hiScoreData.getName() + "' with: " + hiScoreData.getScore());
+//                newHiScore(hiScoreData, true);
+//                resultSender.success();
+//            }
+//        });
+
 
         setContentView(R.layout.activity_playfield);
         controller = new Controller(this);
@@ -281,7 +333,8 @@ public class PlayfieldActivity extends ActionBarActivity
 
         }
 
-        GolgiAPI.usePersistentConnection();
+        //GolgiAPI.usePersistentConnection();
+        GolgiService.usePersistentConnection();
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         broadcastGames = settings.getBoolean("BCAST", true);
         screenName = settings.getString("NAME", "Anonymous");
@@ -302,7 +355,8 @@ public class PlayfieldActivity extends ActionBarActivity
         DBG("onPause()");
         inFg = false;
 
-        GolgiAPI.useEphemeralConnection();
+        //GolgiAPI.useEphemeralConnection();
+        GolgiService.useEphemeralConnection();
         playfield.clearUser(renderer);
         playfield.setOnTouchListener(null);
         controller.onPause();

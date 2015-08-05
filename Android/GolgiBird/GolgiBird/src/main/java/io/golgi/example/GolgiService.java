@@ -40,37 +40,103 @@ import com.openmindnetworks.golgi.api.GolgiAPIHandler;
 import java.util.ArrayList;
 
 import io.golgi.apiimpl.android.GolgiAbstractService;
+import io.golgi.apiimpl.android.GolgiAndroidTransport;
 import io.golgi.example.gen.GolgiKeys;
+import io.golgi.example.gen.TapData;
+import io.golgi.example.gen.TapTelegraphService;
 
 /**
  * Created by briankelly on 13/02/2014.
  */
-public class GolgiService extends GolgiAbstractService {
-    private static GolgiService theInstance;
+
+
+
+
+
+
+public class GolgiService extends GolgiAbstractService
+{
+    private static GolgiService theInstance = null;
+    public GolgiAndroidTransport transport;
+    private static boolean persistentConn = false;
+    private static Object syncObj = new Object();
+
+    public static GolgiService getServiceInstance(){
+        return theInstance;
+    }
+
+
+    public static void usePersistentConnection(){
+        persistentConn = true;
+        GolgiService svc = getServiceInstance();
+        if(svc != null && svc.transport != null){
+            svc.transport.usePersistentConnection();
+        }
+    }
+
+    public static void useEphemeralConnection(){
+        persistentConn = false;
+        GolgiService svc = getServiceInstance();
+        if(svc != null && svc.transport != null){
+            svc.transport.useEphemeralConnection();
+        }
+    }
 
     private static void DBG(String str){
         DBG.write("SVC", str);
     }
 
     @Override
-    public void readyForRegister() {
+    public void readyForRegister()
+    {
+        synchronized(syncObj)
+        {
+            if(theInstance != null && theInstance != this){
+                DBG("**************************");
+                DBG("Changing Service Instance");
+                DBG("**************************");
+            }
+            theInstance = this;
+        }
+
         String id = PlayfieldActivity.getGolgiId(this);
-        registerGolgi(
-                new GolgiAPIHandler() {
-                    @Override
-                    public void registerSuccess() {
-                        DBG("Golgi registration Success");
-                    }
 
-                    @Override
-                    public void registerFailure() {
-                        DBG("Golgi registration Failure");
-                    }
-                },
-                GolgiKeys.DEV_KEY,
-                GolgiKeys.APP_KEY,
-                id);
+        GolgiAPI api = new GolgiAPI(id);
+
+        // Need to initiialize the thrift defined services
+        TapTelegraphService.init();
+
+        PlayfieldActivity.regisiterRequestReceivers();
+
+
+        GolgiAndroidTransport transport = new GolgiAndroidTransport(this, GolgiKeys.DEV_KEY, GolgiKeys.APP_KEY);
+
+        api.setSBI(transport.getSBI());
+        transport.setNBI(api.getNBI());
+        if (persistentConn) {
+            transport.usePersistentConnection();
+        } else {
+            transport.useEphemeralConnection();
+        }
+
+        setAndroidTransport(transport);
+        transport.start();
+
+//        registerGolgi(
+//                new GolgiAPIHandler() {
+//                    @Override
+//                    public void registerSuccess() {
+//                        DBG("Golgi registration Success");
+//                    }
+//
+//                    @Override
+//                    public void registerFailure() {
+//                        DBG("Golgi registration Failure");
+//                    }
+//                },
+//                GolgiKeys.DEV_KEY,
+//                GolgiKeys.APP_KEY,
+//                id);
     }
-
 }
 
