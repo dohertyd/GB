@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "TapTelegraphSvcWrapper.h"
 #import "GameData.h"
+#import "GOLGIBIRD_KEYS.h"
 
 @implementation AppDelegate
 
@@ -16,20 +17,22 @@
 {
     NSLog(@"My token is: %@", deviceToken);
 #ifdef DEBUG
-    [Golgi setDevPushToken:deviceToken];
+    //[_git setDevPushToken:deviceToken];
+    [_git setPushToken:deviceToken andUseDevPush:YES];
+
 #else
-    [Golgi setProdPushToken:deviceToken];
+    //[Golgi setProdPushToken:deviceToken];
+    [_git setPushToken:deviceToken andUseDevPush:NO];
 #endif
-    
-    
 }
 
 - (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo  fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     
-    if([Golgi isGolgiPushData:userInfo]){
+    if([_git isGolgiPushData:userInfo])
+    {
 	// NSLog(@"Golgi Received notification(1): %@", userInfo);
-	[Golgi pushReceived:userInfo withCompletionHandler:completionHandler];
+	[_git pushReceived:userInfo withCompletionHandler:completionHandler];
     }
     else{
         //
@@ -73,6 +76,18 @@
     BOOL launchInBg = false;
     
     // Override point for customization after application launch.
+    if(golgiStuff == nil){
+        golgiStuff = [[GolgiStuff alloc] initWithViewController:nil];
+    }
+    
+    
+    
+    _git = [[GolgiIosTransport alloc] initWithDevId:GOLGIBIRD_DEV_KEY andAppId:GOLGIBIRD_APP_KEY];
+    
+    [Golgi setSBI:[_git getSBI]];
+    [_git setNBI:[Golgi getNBI]];
+    
+    [_git start];
     
     if(launchOptions != nil) {
         // Launched from push notification
@@ -89,8 +104,10 @@
              [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
              */
             
-            [Golgi enteringBackground];
-            [Golgi useEphemeralConnection];
+            //[Golgi enteringBackground];
+            [_git enteringBackground];
+            //[Golgi useEphemeralConnection];
+            [_git useEphemeralConnection];
             launchInBg = true;
         }
     }
@@ -138,8 +155,10 @@
     // GOLGI: Tell the framework that we are going into the background
     //
     NSLog(@"applicationDidEnterBackground()");
-    [Golgi enteringBackground];
-    [Golgi useEphemeralConnection];
+    //[Golgi enteringBackground];
+    [_git enteringBackground];
+    //[Golgi useEphemeralConnection];
+    [_git useEphemeralConnection];
     
 
 }
@@ -158,8 +177,10 @@
     //
     
     NSLog(@"applicationDidBecomeActive()");
-    [Golgi enteringForeground];
-    [Golgi usePersistentConnection];
+    //[Golgi enteringForeground];
+    [_git enteringForeground];
+    //[Golgi usePersistentConnection];
+    [_git usePersistentConnection];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

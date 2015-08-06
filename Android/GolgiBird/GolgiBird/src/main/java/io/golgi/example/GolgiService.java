@@ -103,11 +103,11 @@ public class GolgiService extends GolgiAbstractService
 
         GolgiAPI api = new GolgiAPI(id);
 
-        // Need to initiialize the thrift defined services
+        // Need to initialize the thrift defined services
         TapTelegraphService.init();
 
+        // Set up the requestReceivers in the MainActivity
         PlayfieldActivity.regisiterRequestReceivers();
-
 
         GolgiAndroidTransport transport = new GolgiAndroidTransport(this, GolgiKeys.DEV_KEY, GolgiKeys.APP_KEY);
 
@@ -122,21 +122,6 @@ public class GolgiService extends GolgiAbstractService
         setAndroidTransport(transport);
         transport.start();
 
-//        registerGolgi(
-//                new GolgiAPIHandler() {
-//                    @Override
-//                    public void registerSuccess() {
-//                        DBG("Golgi registration Success");
-//                    }
-//
-//                    @Override
-//                    public void registerFailure() {
-//                        DBG("Golgi registration Failure");
-//                    }
-//                },
-//                GolgiKeys.DEV_KEY,
-//                GolgiKeys.APP_KEY,
-//                id);
     }
 }
 

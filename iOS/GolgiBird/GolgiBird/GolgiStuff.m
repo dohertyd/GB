@@ -35,14 +35,25 @@
     NSLog(@"Registering with golgiId: '%@'", ourId);
     // [Golgi setOption:@"USE_DEV_CLUSTER" withValue:@"0"];
     
-    [Golgi registerWithDevId:GOLGIBIRD_DEV_KEY appId:GOLGIBIRD_APP_KEY instId:ourId andResultHandler:^(NSString *errorText) {
-        if(errorText == nil){
-            NSLog(@"Golgi Registration: PASS");
-        }
-        else{
-            NSLog(@"Golgi Registration: FAIL => '%@'", errorText);
-        }
-    }];
+    
+    [Golgi setInstanceId:ourId];
+    
+//   _git = [[GolgiIosTransport alloc] initWithDevId:GOLGIBIRD_DEV_KEY andAppId:GOLGIBIRD_APP_KEY];
+//    [Golgi setSBI:[_git getSBI]];
+//    [_git setNBI:[Golgi getNBI]];
+//    [_git start];
+    
+    
+    
+    
+//    [Golgi registerWithDevId:GOLGIBIRD_DEV_KEY appId:GOLGIBIRD_APP_KEY instId:ourId andResultHandler:^(NSString *errorText) {
+//        if(errorText == nil){
+//            NSLog(@"Golgi Registration: PASS");
+//        }
+//        else{
+//            NSLog(@"Golgi Registration: FAIL => '%@'", errorText);
+//        }
+//    }];
     
 }
 

@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TapTelegraphSvcWrapper.h"
+#import "GolgiStuff.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 {
     UIAlertView *dataSharingAlert;
+    GolgiStuff *golgiStuff;
 }
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) GolgiIosTransport * git;
 @end

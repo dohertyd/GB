@@ -21,4 +21,5 @@
 - (void)setPushId:(NSString *)_pushId;
 - (GolgiStuff *)initWithViewController:(ViewController *)viewController;
 
+@property (strong, nonatomic) GolgiIosTransport * git;
 @end

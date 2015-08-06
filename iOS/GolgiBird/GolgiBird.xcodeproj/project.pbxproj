@@ -40,6 +40,7 @@
 		96C1B8BB18B51B1100172130 /* TapTelegraphSvcWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C1B8BA18B51B1100172130 /* TapTelegraphSvcWrapper.m */; };
 		96C1B8BE18B5D90100172130 /* GameData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 96C1B8BD18B5D90100172130 /* GameData.plist */; };
 		96C1B8C118B5E16100172130 /* GameData.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C1B8C018B5E16100172130 /* GameData.m */; };
+		BE5746C01B7257400043C964 /* Globals.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5746BF1B7257400043C964 /* Globals.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		96C1B8BD18B5D90100172130 /* GameData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameData.plist; sourceTree = "<group>"; };
 		96C1B8BF18B5E16100172130 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
 		96C1B8C018B5E16100172130 /* GameData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameData.m; sourceTree = "<group>"; };
+		BE5746BE1B7257400043C964 /* Globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Globals.h; sourceTree = "<group>"; };
+		BE5746BF1B7257400043C964 /* Globals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Globals.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +196,8 @@
 				96C1B8B418B5153700172130 /* Settings.bundle */,
 				96C1B8BC18B51D9F00172130 /* Config.xcconfig */,
 				96C1B8BD18B5D90100172130 /* GameData.plist */,
+				BE5746BE1B7257400043C964 /* Globals.h */,
+				BE5746BF1B7257400043C964 /* Globals.m */,
 			);
 			path = GolgiBird;
 			sourceTree = "<group>";
@@ -364,7 +369,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\n# GOLGI_WORK_DIR: Where the golgi_gen script will copied to run\n# GOLGI_PKG_DIR: The Golgi Package install directory\n# GOLGI_LIB_DIR: Where the Golgi runtime libraries whould be put\n#\n\nGOLGI_WORK_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_PKG_DIR=\"$HOME/Golgi-Pkg/v2-08-03\"\nGOLGI_HDR_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_LIB_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Copy Thrift file(s) into place (if necessary)\n#\n\ncp -f \"$PROJECT_DIR/../../TapTelegraph.thrift\" \"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Create the GOLGI_KEYS.h file containing\n# the Developer key and the application key\n#\n\necho '#define GOLGIBIRD_DEV_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.DevKey`'\"' >\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\necho '#define GOLGIBIRD_APP_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.AppKey`'\"' >>\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\n\n\n. \"$GOLGI_PKG_DIR/iOS/golgi_gen.sh\"\n\n#\n# Remove the thrift file because the canonical source is elsewhere\n#\n\nrm -f \"$GOLGI_WORK_DIR/TapTelegraph.thrift\"\n\n";
+			shellScript = "#\n# GOLGI_WORK_DIR: Where the golgi_gen script will copied to run\n# GOLGI_PKG_DIR: The Golgi Package install directory\n# GOLGI_LIB_DIR: Where the Golgi runtime libraries whould be put\n#\n\nGOLGI_WORK_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_PKG_DIR=\"$HOME/Golgi-Pkg/v3-03-00\"\nGOLGI_HDR_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\nGOLGI_LIB_DIR=\"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Copy Thrift file(s) into place (if necessary)\n#\n\ncp -f \"$PROJECT_DIR/../../TapTelegraph.thrift\" \"$PROJECT_DIR/$PROJECT_NAME\"\n\n#\n# Create the GOLGI_KEYS.h file containing\n# the Developer key and the application key\n#\n\necho '#define GOLGIBIRD_DEV_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.DevKey`'\"' >\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\necho '#define GOLGIBIRD_APP_KEY @\"'`cat $PROJECT_DIR/../../GolgiBird.AppKey`'\"' >>\"$PROJECT_DIR/$PROJECT_NAME/GOLGIBIRD_KEYS.h\"\n\n\n. \"$GOLGI_PKG_DIR/iOS/golgi_gen.sh\"\n\n#\n# Remove the thrift file because the canonical source is elsewhere\n#\n\nrm -f \"$GOLGI_WORK_DIR/TapTelegraph.thrift\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -375,6 +380,7 @@
 			files = (
 				9683967018B258F000F5E1F4 /* Playfield.m in Sources */,
 				96C1B8A618B4A80600172130 /* Random.m in Sources */,
+				BE5746C01B7257400043C964 /* Globals.m in Sources */,
 				96B47B6B18B4A49D00EADF62 /* Pipe.m in Sources */,
 				96C1B8AC18B4B62B00172130 /* Hurdle.m in Sources */,
 				96C1B8A918B4B16100172130 /* Controller.m in Sources */,
@@ -447,7 +453,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 96C1B8BC18B51D9F00172130 /* Config.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -489,7 +495,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 96C1B8BC18B51D9F00172130 /* Config.xcconfig */;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
